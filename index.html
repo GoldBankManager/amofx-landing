@@ -125,12 +125,6 @@
                 repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(212,175,55,0.1) 2px, rgba(212,175,55,0.1) 3px);
         }
         
-        .stat-number {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum";
-        }
-        
-        /* 3D Card Hover Effect */
         .card-3d {
             transform-style: preserve-3d;
             perspective: 1000px;
@@ -167,6 +161,22 @@
             25% { transform: translateY(-15px) rotate(1deg); }
             75% { transform: translateY(5px) rotate(-1deg); }
         }
+
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum";
+        }
+
+        /* Results image hover effect */
+        .result-img {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .result-img:hover {
+            transform: scale(1.04);
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.25);
+        }
     </style>
 </head>
 <body class="text-white overflow-x-hidden relative">
@@ -195,7 +205,7 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#vision" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">VISION</a>
                     <a href="#features" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">FEATURES</a>
-                    <a href="#testimonials" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">REPUTATION</a>
+                    <a href="#results" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">RESULTS</a>
                     <a href="#faq" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">FAQ</a>
                 </div>
                 <a href="https://t.me/GoldbankManager" target="_blank" 
@@ -210,7 +220,6 @@
     <section id="vision" class="relative min-h-screen flex items-center justify-center pt-20 grid-bg">
         <div class="absolute inset-0 chart-bg"></div>
         
-        <!-- Floating 3D Decorations (CSS) -->
         <div class="absolute top-1/4 left-[10%] w-40 h-40 bg-gradient-to-br from-gold/10 to-transparent rounded-full blur-3xl float-anim"></div>
         <div class="absolute bottom-1/4 right-[10%] w-60 h-60 bg-gradient-to-tl from-gold/8 to-transparent rounded-full blur-3xl float-delayed"></div>
         <div class="absolute top-1/2 right-[25%] w-20 h-20 bg-gold/15 rounded-full blur-2xl float-anim" style="animation-delay: 4s;"></div>
@@ -235,7 +244,7 @@
                 von 250 aktiven Tradern. Dein Edge im Markt beginnt hier.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
                 <a href="https://t.me/GoldbankManager" target="_blank"
                    class="glow-btn text-bank-900 font-display font-bold text-lg px-10 py-5 rounded-2xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-3">
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -243,26 +252,6 @@
                     </svg>
                     <span>JETZT BEITRETEN</span>
                 </a>
-            </div>
-            
-            <!-- Live Stats Bar -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-                <div class="glass-card rounded-2xl p-6 text-center">
-                    <div class="font-display font-black text-4xl gold-text stat-number">250+</div>
-                    <div class="text-gray-400 text-xs mt-2 tracking-wider">AKTIVE TRADER</div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 text-center">
-                    <div class="font-display font-black text-4xl gold-text">85%</div>
-                    <div class="text-gray-400 text-xs mt-2 tracking-wider">WIN-RATE</div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 text-center">
-                    <div class="font-display font-black text-4xl gold-text">24/7</div>
-                    <div class="text-gray-400 text-xs mt-2 tracking-wider">SUPPORT</div>
-                </div>
-                <div class="glass-card rounded-2xl p-6 text-center">
-                    <div class="font-display font-black text-4xl gold-text">#1</div>
-                    <div class="text-gray-400 text-xs mt-2 tracking-wider">COMMUNITY</div>
-                </div>
             </div>
         </div>
     </section>
@@ -284,7 +273,7 @@
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-32">
                 
                 <!-- Card 1 -->
                 <div class="glass-card rounded-3xl p-8 card-3d">
@@ -333,6 +322,50 @@
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Live Stats Bar (moved here from Hero) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text stat-number">250+</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">AKTIVE TRADER</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text">85%</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">WIN-RATE</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text">24/7</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">SUPPORT</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text">#1</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">COMMUNITY</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== RESULTS SECTION ========== -->
+    <section id="results" class="relative py-32">
+        <div class="absolute inset-0 bg-gradient-to-b from-bank-900 via-bank-800/50 to-bank-900"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            
+            <div class="text-center mb-20">
+                <div class="inline-block glass px-4 py-2 rounded-full mb-6">
+                    <span class="text-gold text-xs tracking-[0.3em] font-display">PERFORMANCE</span>
+                </div>
+                <h2 class="font-display font-bold text-5xl md:text-6xl mb-4">
+                    UNSERE <span class="gold-text">RESULTS</span>
+                </h2>
+                <p class="text-gray-500 text-lg max-w-xl mx-auto">
+                    Echte Trades, echte Gewinne. Transparent und nachprüfbar.
+                </p>
+            </div>
+            
+            <!-- Results Grid -->
+            <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Results werden hier eingefügt -->
             </div>
         </div>
     </section>
@@ -430,7 +463,6 @@
         renderer.setPixelRatio(window.devicePixelRatio * 0.6);
         camera.position.z = 30;
 
-        // Gold particles
         const particlesGeometry = new THREE.BufferGeometry();
         const particlesCount = 500;
         const posArray = new Float32Array(particlesCount * 3);
@@ -442,7 +474,6 @@
         }
 
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        
         const particlesMaterial = new THREE.PointsMaterial({
             size: 0.08,
             color: 0xD4AF37,
@@ -454,9 +485,7 @@
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
 
-        // Floating geometric shapes
         const geoGroup = new THREE.Group();
-        
         const shapes = [
             new THREE.IcosahedronGeometry(0.6, 0),
             new THREE.OctahedronGeometry(0.5),
@@ -487,22 +516,18 @@
             };
             geoGroup.add(mesh);
         }
-        
         scene.add(geoGroup);
 
         let mouseX = 0, mouseY = 0;
-        
         document.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
         let clock = 0;
-
         function animate() {
             requestAnimationFrame(animate);
             clock += 0.005;
-
             particlesMesh.rotation.x += 0.0002;
             particlesMesh.rotation.y += 0.0003;
 
@@ -512,14 +537,12 @@
                 child.position.y += Math.sin(clock * child.userData.speed + child.userData.phase) * 0.02;
             });
 
-            // Mouse parallax
             geoGroup.rotation.x += (mouseY * 0.02 - geoGroup.rotation.x) * 0.02;
             geoGroup.rotation.y += (mouseX * 0.02 - geoGroup.rotation.y) * 0.02;
             particlesMesh.rotation.y += mouseX * 0.0005;
 
             renderer.render(scene, camera);
         }
-
         animate();
 
         window.addEventListener('resize', () => {
