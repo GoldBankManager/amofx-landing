@@ -5,645 +5,417 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoldBank Trading | Elite Trading Community</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Orbitron', 'monospace'],
-                    },
-                    colors: {
-                        gold: { DEFAULT:'#D4AF37', bright:'#FFD700', dark:'#B8960C', light:'#F5D76E' },
-                        bank: { 900:'#050510', 800:'#0A0A18', 700:'#0E0E22', 600:'#151530' }
-                    }
+                    fontFamily: { sans: ['Inter','sans-serif'], display: ['Orbitron','monospace'] },
+                    colors: { gold: { DEFAULT:'#D4AF37', bright:'#FFD700', dark:'#B8960C', light:'#F5D76E' }, bank: { 900:'#050510', 800:'#0A0A18', 700:'#0E0E22', 600:'#151530' } }
                 }
             }
         }
     </script>
     <style>
-        :root {
-            --gold: #D4AF37;
-            --gold-bright: #FFD700;
-            --gold-dark: #B8960C;
-            --bg: #050510;
-        }
-        
+        :root { --gold: #D4AF37; --gold-bright: #FFD700; --gold-dark: #B8960C; --bg: #050510; }
         * { scroll-behavior: smooth; }
+        body { background: var(--bg); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        body { background: var(--bg); font-family: 'Inter', sans-serif; cursor: none; }
+        /* GPU-accelerated elements */
+        .gpu { transform: translateZ(0); will-change: transform; }
 
-        /* Custom Cursor */
-        .cursor-glow {
-            position: fixed;
-            width: 300px; height: 300px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.03) 40%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s;
-        }
-        .cursor-dot {
-            position: fixed;
-            width: 8px; height: 8px;
-            background: var(--gold-bright);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px rgba(212,175,55,0.8), 0 0 60px rgba(212,175,55,0.3);
-        }
-
-        /* Glass */
-        .glass {
-            background: rgba(14, 14, 34, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(212, 175, 55, 0.12);
-        }
-
+        /* Glass (lightweight - no backdrop-filter for performance) */
+        .glass { background: rgba(14,14,34,0.85); border: 1px solid rgba(212,175,55,0.1); }
         .glass-card {
-            background: linear-gradient(135deg, rgba(14,14,34,0.9) 0%, rgba(10,10,24,0.9) 100%);
-            border: 1px solid rgba(212,175,55,0.08);
-            backdrop-filter: blur(16px);
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, rgba(14,14,34,0.92) 0%, rgba(10,10,24,0.92) 100%);
+            border: 1px solid rgba(212,175,55,0.07);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative; overflow: hidden;
         }
+        .glass-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(212,175,55,0.06); }
 
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(212,175,55,0.3), transparent 40%, transparent 60%, rgba(212,175,55,0.3));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .glass-card:hover::before { opacity: 1; }
-        .glass-card:hover { transform: translateY(-6px); box-shadow: 0 25px 60px rgba(212,175,55,0.08); }
-
-        /* Gold Text */
+        /* Gold gradient text */
         .gold-text {
-            background: linear-gradient(135deg, #FFE566 0%, #FFD700 20%, #D4AF37 50%, #FFD700 80%, #FFE566 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 200% auto;
+            background: linear-gradient(135deg, #FFE566, #FFD700, #D4AF37, #FFD700, #FFE566);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; background-size: 200% auto;
             animation: goldShimmer 4s ease-in-out infinite;
         }
+        @keyframes goldShimmer { 0%,100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 
-        @keyframes goldShimmer {
-            0%,100% { background-position: 0% center; }
-            50% { background-position: 200% center; }
-        }
-
-        /* Glow Button */
+        /* Buttons */
         .glow-btn {
             background: linear-gradient(135deg, #B8960C, #D4AF37, #FFD700, #D4AF37, #B8960C);
-            background-size: 300% 300%;
-            animation: btnShimmer 3s ease infinite;
-            box-shadow: 0 0 40px rgba(212,175,55,0.25), inset 0 0 20px rgba(255,215,0,0.1);
-            position: relative;
-            z-index: 1;
+            background-size: 300% 300%; animation: btnShimmer 3s ease infinite;
+            box-shadow: 0 0 30px rgba(212,175,55,0.2);
+            display: inline-flex; align-items: center; gap: 8px;
         }
-        .glow-btn:hover {
-            box-shadow: 0 0 80px rgba(212,175,55,0.5), 0 0 120px rgba(212,175,55,0.2);
-            transform: translateY(-4px) scale(1.03);
-        }
-        @keyframes btnShimmer {
-            0%,100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
+        .glow-btn:hover { box-shadow: 0 0 60px rgba(212,175,55,0.4); transform: translateY(-2px); }
+        @keyframes btnShimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
-        /* Pulse Rings */
+        /* Pulse rings on CTA */
         .pulse-rings { position: relative; }
-        .pulse-rings::before, .pulse-rings::after {
-            content: ''; position: absolute; inset: -4px;
-            border-radius: inherit;
-            border: 2px solid rgba(212,175,55,0.5);
-            animation: pulseExpand 2s ease-out infinite;
+        .pulse-rings::before {
+            content: ''; position: absolute; inset: -4px; border-radius: inherit;
+            border: 2px solid rgba(212,175,55,0.4); animation: pulseExpand 2.5s ease-out infinite;
         }
-        .pulse-rings::after { animation-delay: 1s; }
-        @keyframes pulseExpand {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.25); opacity: 0; }
-        }
+        @keyframes pulseExpand { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.2); opacity: 0; } }
 
-        /* Grid Background */
+        /* Grid */
         .grid-bg {
-            background-image:
-                linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(212,175,55,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.025) 1px, transparent 1px);
             background-size: 70px 70px;
         }
 
-        /* Floating */
-        .float { animation: float 7s ease-in-out infinite; }
-        .float2 { animation: float 7s ease-in-out 3.5s infinite; }
-        @keyframes float {
-            0%,100% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(2deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
-        }
+        /* Float */
+        .float { animation: float 8s ease-in-out infinite; }
+        .float2 { animation: float 8s ease-in-out 4s infinite; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
 
-        /* Live Ticker */
-        .ticker-wrap {
-            overflow: hidden;
-            border-top: 1px solid rgba(212,175,55,0.1);
-            border-bottom: 1px solid rgba(212,175,55,0.1);
-        }
-        .ticker {
-            display: flex;
-            animation: ticker 25s linear infinite;
-            width: max-content;
-        }
-        .ticker:hover { animation-play-state: paused; }
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        /* Ticker */
+        .ticker-wrap { overflow: hidden; border-top: 1px solid rgba(212,175,55,0.08); border-bottom: 1px solid rgba(212,175,55,0.08); }
+        .ticker { display: flex; animation: ticker 30s linear infinite; width: max-content; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Notifications */
-        .notif {
-            animation: notifIn 0.5s ease-out, notifOut 0.5s ease-in 4.5s forwards;
-            pointer-events: none;
-        }
-        @keyframes notifIn {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes notifOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: translateY(-10px); }
-        }
+        /* Notification popup */
+        .notif { animation: notifIn 0.4s ease-out, notifOut 0.4s ease-in 3.5s forwards; }
+        @keyframes notifIn { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes notifOut { to { opacity: 0; transform: translateY(-8px); } }
 
         /* Typewriter */
-        .typewriter::after {
-            content: '|';
-            animation: blink 0.8s step-end infinite;
-            color: var(--gold-bright);
-        }
+        .typewriter::after { content: '|'; animation: blink 0.8s step-end infinite; color: var(--gold-bright); }
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* Custom cursor (desktop only, lightweight) */
+        @media (min-width: 769px) {
+            #cursorDot { position: fixed; width: 6px; height: 6px; background: #FFD700; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%,-50%); box-shadow: 0 0 15px rgba(255,215,0,0.6); }
+        }
+
         /* 3D Tilt */
-        .tilt { transform-style: preserve-3d; perspective: 1200px; }
-        .tilt-inner { transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .tilt { transform-style: preserve-3d; perspective: 1000px; }
+        .tilt-inner { transition: transform 0.5s ease; }
 
-        /* Animated Border */
-        .border-glow {
-            position: relative;
-            border-radius: 24px;
+        /* Animated border for slider */
+        .border-glow { position: relative; border-radius: 24px; }
+        .border-glow::after {
+            content: ''; position: absolute; inset: -1px; border-radius: inherit;
+            background: linear-gradient(45deg, transparent 30%, rgba(212,175,55,0.3) 45%, transparent 50%, rgba(212,175,55,0.3) 65%, transparent 80%);
+            background-size: 300% 300%; animation: bdrMove 4s linear infinite; z-index: -1;
         }
-        .border-glow::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            background: linear-gradient(45deg, transparent, rgba(212,175,55,0.5), transparent, rgba(212,175,55,0.5), transparent);
-            background-size: 400% 400%;
-            animation: borderMove 3s linear infinite;
-            z-index: -1;
-        }
-        @keyframes borderMove {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 400% 400%; }
-        }
+        @keyframes bdrMove { 0% { background-position: 0% 0%; } 100% { background-position: 300% 300%; } }
 
-        /* FOMO Counter */
-        @keyframes countPulse {
-            0%,100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        /* Responsive cursor */
-        @media (max-width: 768px) {
-            body { cursor: auto; }
-            .cursor-glow, .cursor-dot { display: none; }
+        /* Reduced motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
         }
     </style>
 </head>
-<body class="text-white overflow-x-hidden">
+<body class="text-white">
 
-    <!-- Custom Cursor -->
-    <div class="cursor-glow" id="cursorGlow"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
+    <!-- Lightweight custom cursor -->
+    <div id="cursorDot"></div>
 
-    <!-- THREE.js Canvas -->
+    <!-- THREE.js Background -->
     <canvas id="three-bg" style="position:fixed;top:0;left:0;z-index:0;pointer-events:none;"></canvas>
 
-    <!-- Live Join Notifications -->
-    <div id="notif-area" style="position:fixed;bottom:24px;right:24px;z-index:9998;display:flex;flex-direction:column;gap:8px;"></div>
+    <!-- Join Notifications -->
+    <div id="notif-area" style="position:fixed;bottom:20px;right:20px;z-index:9998;display:flex;flex-direction:column;gap:6px;pointer-events:none;"></div>
 
-    <!-- Nav -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass" style="background:rgba(5,5,16,0.85)">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-dark via-gold to-gold-bright flex items-center justify-center transform -rotate-12 shadow-lg shadow-gold/20">
-                        <svg class="w-6 h-6 text-bank-900 rotate-12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <span class="font-display font-bold text-xl tracking-wider">GOLD<span class="text-gold">BANK</span></span>
+    <!-- NAV - Slim, transparent, minimal blur -->
+    <nav class="fixed top-0 left-0 right-0 z-50" style="background:rgba(5,5,16,0.82);height:56px;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-dark via-gold to-gold-bright flex items-center justify-center shadow-lg shadow-gold/10">
+                    <svg class="w-5 h-5 text-bank-900" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 </div>
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="#vision" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">VISION</a>
-                    <a href="#features" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">FEATURES</a>
-                    <a href="#results" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">RESULTS</a>
-                    <a href="#faq" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">FAQ</a>
-                </div>
-                <a href="https://t.me/GoldbankManager" target="_blank" class="glow-btn pulse-rings text-bank-900 font-display font-bold text-xs px-5 py-2.5 rounded-xl transition-all duration-300 hover:scale-110 inline-block relative z-10">JOIN</a>
+                <span class="font-display font-bold text-lg tracking-wider">GOLD<span class="text-gold">BANK</span></span>
             </div>
+            <div class="hidden md:flex items-center space-x-5">
+                <a href="#vision" class="text-gray-300 hover:text-gold text-xs tracking-wide transition-colors">VISION</a>
+                <a href="#features" class="text-gray-300 hover:text-gold text-xs tracking-wide transition-colors">FEATURES</a>
+                <a href="#results" class="text-gray-300 hover:text-gold text-xs tracking-wide transition-colors">RESULTS</a>
+                <a href="#faq" class="text-gray-300 hover:text-gold text-xs tracking-wide transition-colors">FAQ</a>
+            </div>
+            <a href="https://t.me/GoldbankManager" target="_blank" class="glow-btn pulse-rings text-bank-900 font-display font-bold text-xs px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 relative z-10">JOIN</a>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section id="vision" class="relative min-h-screen flex items-center justify-center pt-16 grid-bg">
+    <section id="vision" class="relative min-h-screen flex items-center justify-center grid-bg" style="padding-top:56px;">
         <div class="absolute inset-0 bg-gradient-to-b from-bank-900 via-transparent to-bank-900 z-[1]"></div>
-        <div class="absolute top-1/4 left-[8%] w-56 h-56 bg-gradient-to-br from-gold/8 to-transparent rounded-full blur-3xl float"></div>
-        <div class="absolute bottom-1/4 right-[8%] w-80 h-80 bg-gradient-to-tl from-gold/5 to-transparent rounded-full blur-3xl float2"></div>
+        <div class="absolute top-1/4 left-[8%] w-48 h-48 bg-gradient-to-br from-gold/6 to-transparent rounded-full blur-3xl float"></div>
+        <div class="absolute bottom-1/4 right-[8%] w-64 h-64 bg-gradient-to-tl from-gold/4 to-transparent rounded-full blur-3xl float2"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="inline-flex items-center space-x-3 glass px-5 py-3 rounded-full mb-10">
-                <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </span>
+            <div class="inline-flex items-center space-x-3 glass px-5 py-3 rounded-full mb-8">
+                <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
                 <span class="text-sm text-gray-300 tracking-wider"><span id="onlineCount">247</span> TRADER ONLINE</span>
             </div>
 
-            <h1 class="font-display font-black text-5xl md:text-7xl lg:text-[90px] leading-none mb-6 tracking-tight">
-                DOMINIERE<br>
-                <span class="gold-text">DEN MARKT</span>
-            </h1>
+            <h1 class="font-display font-black text-5xl md:text-7xl lg:text-[88px] leading-none mb-5 tracking-tight">DOMINIERE<br><span class="gold-text">DEN MARKT</span></h1>
 
-            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed font-light typewriter" id="typewriter"></p>
+            <p class="text-lg text-gray-400 max-w-xl mx-auto mb-6 font-light typewriter" id="typewriter"></p>
 
-            <!-- FOMO -->
-            <div class="flex items-center justify-center gap-3 mb-8">
-                <div class="glass px-4 py-2 rounded-full text-sm">
-                    🔥 Nur noch <span class="text-gold-bright font-bold animate-pulse" id="fomoCount">27</span> Plätze frei
-                </div>
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <div class="glass px-4 py-2 rounded-full text-sm">🔥 Nur noch <span class="text-gold-bright font-bold" id="fomoCount">27</span> Plätze</div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                <a href="https://t.me/GoldbankManager" target="_blank" class="glow-btn pulse-rings text-bank-900 font-display font-bold text-lg px-10 py-5 rounded-2xl transition-all duration-300 hover:scale-110 inline-flex items-center space-x-3 relative z-10">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span>JETZT KOSTENLOS BEITRETEN</span>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
+                <a href="https://t.me/GoldbankManager" target="_blank" class="glow-btn pulse-rings text-bank-900 font-display font-bold text-lg px-10 py-4 rounded-2xl transition-all duration-300 hover:scale-105 relative z-10">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    JETZT KOSTENLOS BEITRETEN
                 </a>
-                <a href="#results" class="glass text-white font-semibold px-8 py-4 rounded-2xl hover:bg-white/5 transition-all duration-300">Results ansehen ↓</a>
+                <a href="#results" class="glass text-white font-semibold px-7 py-3 rounded-xl hover:bg-white/5 transition-all duration-300 text-sm">Results ↓</a>
             </div>
 
             <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-                <div class="glass-card rounded-2xl p-6 text-center tilt">
-                    <div class="tilt-inner">
-                        <div class="font-display font-black text-4xl gold-text"><span data-count="250">0</span>+</div>
-                        <div class="text-gray-400 text-xs mt-2 tracking-wider">AKTIVE TRADER</div>
-                    </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto">
+                <div class="glass-card rounded-2xl p-5 text-center tilt gpu">
+                    <div class="tilt-inner"><div class="font-display font-black text-3xl gold-text"><span data-count="250">0</span>+</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">AKTIVE TRADER</div></div>
                 </div>
-                <div class="glass-card rounded-2xl p-6 text-center tilt">
-                    <div class="tilt-inner">
-                        <div class="font-display font-black text-4xl gold-text"><span data-count="94">0</span>%</div>
-                        <div class="text-gray-400 text-xs mt-2 tracking-wider">WIN-RATE (30D)</div>
-                    </div>
+                <div class="glass-card rounded-2xl p-5 text-center tilt gpu">
+                    <div class="tilt-inner"><div class="font-display font-black text-3xl gold-text"><span data-count="94">0</span>%</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">WIN-RATE (30D)</div></div>
                 </div>
-                <div class="glass-card rounded-2xl p-6 text-center tilt">
-                    <div class="tilt-inner">
-                        <div class="font-display font-black text-4xl gold-text">24<span data-count="7">0</span></div>
-                        <div class="text-gray-400 text-xs mt-2 tracking-wider">SUPPORT</div>
-                    </div>
+                <div class="glass-card rounded-2xl p-5 text-center tilt gpu">
+                    <div class="tilt-inner"><div class="font-display font-black text-3xl gold-text">24/<span data-count="7">0</span></div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">SUPPORT</div></div>
                 </div>
-                <div class="glass-card rounded-2xl p-6 text-center tilt">
-                    <div class="tilt-inner">
-                        <div class="font-display font-black text-4xl gold-text">#<span data-count="1">0</span></div>
-                        <div class="text-gray-400 text-xs mt-2 tracking-wider">COMMUNITY</div>
-                    </div>
+                <div class="glass-card rounded-2xl p-5 text-center tilt gpu">
+                    <div class="tilt-inner"><div class="font-display font-black text-3xl gold-text">#<span data-count="1">0</span></div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">COMMUNITY</div></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Live Ticker -->
-    <div class="ticker-wrap py-2.5 relative z-10">
-        <div class="ticker">
-            <span class="text-gold text-sm mx-8">🏆 +2,130€ XAUUSD TP Hit</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +890€ EURUSD 3:1 RR</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +3,450€ NASDAQ Perfect Entry</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +1,560€ BTC Scalp +4.2%</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +780€ GBPJPY Breakout</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +2,130€ XAUUSD TP Hit</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +890€ EURUSD 3:1 RR</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +3,450€ NASDAQ Perfect Entry</span>
-            <span class="text-gray-400 text-sm mx-8">|</span>
-            <span class="text-gold text-sm mx-8">🏆 +1,560€ BTC Scalp +4.2%</span>
-        </div>
+    <div class="ticker-wrap py-2 relative z-10">
+        <div class="ticker"><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +2,130€ XAUUSD</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +890€ EURUSD</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +3,450€ NASDAQ</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +1,560€ BTC</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +780€ GBPJPY</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +2,130€ XAUUSD</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +890€ EURUSD</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +3,450€ NASDAQ</span><span class="text-gray-500 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">🏆 +1,560€ BTC</span></div>
     </div>
 
     <!-- Features -->
-    <section id="features" class="relative py-20 z-10">
+    <section id="features" class="relative py-16 z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <div class="inline-block glass px-4 py-2 rounded-full mb-6">
-                    <span class="text-gold text-xs tracking-[0.3em] font-display">DAS BIETEN WIR</span>
-                </div>
-                <h2 class="font-display font-bold text-5xl md:text-6xl mb-4">DEIN <span class="gold-text">EDGE</span></h2>
-                <p class="text-gray-500 text-lg">Drei Säulen. Ein Ziel: Deine Profitabilität.</p>
+            <div class="text-center mb-12">
+                <div class="inline-block glass px-4 py-2 rounded-full mb-5"><span class="text-gold text-xs tracking-[0.3em] font-display">DAS BIETEN WIR</span></div>
+                <h2 class="font-display font-bold text-4xl md:text-6xl mb-3">DEIN <span class="gold-text">EDGE</span></h2>
+                <p class="text-gray-500">Drei Säulen. Ein Ziel: Profitabilität.</p>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-card rounded-3xl p-8 tilt">
-                    <div class="tilt-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-gold/20 to-gold/10 rounded-2xl flex items-center justify-center mb-6 border border-gold/20">
-                            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <h3 class="font-display font-bold text-2xl mb-3">ELITE <span class="text-gold">SIGNALE</span></h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Entry, SL & TP präzise definiert. Jedes Setup charttechnisch fundiert. KI-gestützte Scanner für maximale Trefferquote.</p>
-                    </div>
-                </div>
-                <div class="glass-card rounded-3xl p-8 tilt">
-                    <div class="tilt-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-gold/20 to-gold/10 rounded-2xl flex items-center justify-center mb-6 border border-gold/20">
-                            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        </div>
-                        <h3 class="font-display font-bold text-2xl mb-3">LIVE <span class="text-gold">ANALYSE</span></h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Echtzeit-Marktanalyse im Stream. Lerne WARUM Trades funktionieren. Kein Blind-Follow — echtes Trading-Wissen.</p>
-                    </div>
-                </div>
-                <div class="glass-card rounded-3xl p-8 tilt">
-                    <div class="tilt-inner">
-                        <div class="w-14 h-14 bg-gradient-to-br from-gold/20 to-gold/10 rounded-2xl flex items-center justify-center mb-6 border border-gold/20">
-                            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        </div>
-                        <h3 class="font-display font-bold text-2xl mb-3">BROTHER<span class="text-gold">HOOD</span></h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">250+ Trader auf einer Mission. Täglicher Austausch, gemeinsame Growth-Mindset. Keine Gurus — nur Winners.</p>
-                    </div>
-                </div>
+            <div class="grid md:grid-cols-3 gap-5">
+                <div class="glass-card rounded-3xl p-7 tilt gpu"><div class="tilt-inner">
+                    <div class="w-12 h-12 bg-gradient-to-br from-gold/15 to-gold/08 rounded-2xl flex items-center justify-center mb-5 border border-gold/15"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                    <h3 class="font-display font-bold text-xl mb-2">ELITE <span class="text-gold">SIGNALE</span></h3>
+                    <p class="text-gray-400 text-sm">Entry, SL & TP präzise. Charttechnisch fundiert. KI-gestützte Scanner.</p>
+                </div></div>
+                <div class="glass-card rounded-3xl p-7 tilt gpu"><div class="tilt-inner">
+                    <div class="w-12 h-12 bg-gradient-to-br from-gold/15 to-gold/08 rounded-2xl flex items-center justify-center mb-5 border border-gold/15"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+                    <h3 class="font-display font-bold text-xl mb-2">LIVE <span class="text-gold">ANALYSE</span></h3>
+                    <p class="text-gray-400 text-sm">Echtzeit-Charts im Stream. Verstehe WARUM, nicht nur WAS.</p>
+                </div></div>
+                <div class="glass-card rounded-3xl p-7 tilt gpu"><div class="tilt-inner">
+                    <div class="w-12 h-12 bg-gradient-to-br from-gold/15 to-gold/08 rounded-2xl flex items-center justify-center mb-5 border border-gold/15"><svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
+                    <h3 class="font-display font-bold text-xl mb-2">BROTHER<span class="text-gold">HOOD</span></h3>
+                    <p class="text-gray-400 text-sm">250+ Trader. Täglicher Austausch. Keine Gurus — nur Winners.</p>
+                </div></div>
             </div>
         </div>
     </section>
 
     <!-- Results Slider -->
-    <section id="results" class="relative py-16 z-10">
-        <div class="absolute inset-0 bg-gradient-to-r from-gold/3 via-transparent to-gold/3"></div>
+    <section id="results" class="relative py-14 z-10">
+        <div class="absolute inset-0 bg-gradient-to-r from-gold/2 via-transparent to-gold/2"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8">
-                <div class="inline-block glass px-4 py-2 rounded-full mb-4">
-                    <span class="text-gold text-xs tracking-[0.3em] font-display">PERFORMANCE</span>
-                </div>
-                <h2 class="font-display font-bold text-4xl md:text-5xl mb-2">UNSERE <span class="gold-text">RESULTS</span></h2>
-                <p class="text-gray-500 text-sm">Echte Trades. Kein Fake. Transparent.</p>
+            <div class="text-center mb-7">
+                <div class="inline-block glass px-4 py-2 rounded-full mb-4"><span class="text-gold text-xs tracking-[0.3em] font-display">PERFORMANCE</span></div>
+                <h2 class="font-display font-bold text-3xl md:text-5xl mb-2">UNSERE <span class="gold-text">RESULTS</span></h2>
+                <p class="text-gray-500 text-sm">Echte Trades. Kein Fake.</p>
             </div>
-
             <div class="border-glow max-w-4xl mx-auto">
-                <div class="slider-container glass-card rounded-3xl" id="slider" style="position:relative;overflow:hidden;">
-                    <div class="slider-track" id="sliderTrack" style="display:flex;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
-                        <div class="slider-slide" style="min-width:100%;display:flex;justify-content:center;padding:12px;"><img src="results/1.jpg" alt="Result" loading="lazy" style="max-height:500px;border-radius:16px;"></div>
-                        <div class="slider-slide" style="min-width:100%;display:flex;justify-content:center;padding:12px;"><img src="results/2.jpg" alt="Result" loading="lazy" style="max-height:500px;border-radius:16px;"></div>
-                        <div class="slider-slide" style="min-width:100%;display:flex;justify-content:center;padding:12px;"><img src="results/3.jpg" alt="Result" loading="lazy" style="max-height:500px;border-radius:16px;"></div>
-                        <div class="slider-slide" style="min-width:100%;display:flex;justify-content:center;padding:12px;"><img src="results/4.jpg" alt="Result" loading="lazy" style="max-height:500px;border-radius:16px;"></div>
+                <div class="glass-card rounded-3xl" id="slider" style="position:relative;overflow:hidden;">
+                    <div id="sliderTrack" style="display:flex;transition:transform 0.5s ease;">
+                        <div style="min-width:100%;display:flex;justify-content:center;padding:10px;"><img src="results/1.jpg" alt="Result" loading="lazy" style="max-height:480px;border-radius:14px;"></div>
+                        <div style="min-width:100%;display:flex;justify-content:center;padding:10px;"><img src="results/2.jpg" alt="Result" loading="lazy" style="max-height:480px;border-radius:14px;"></div>
+                        <div style="min-width:100%;display:flex;justify-content:center;padding:10px;"><img src="results/3.jpg" alt="Result" loading="lazy" style="max-height:480px;border-radius:14px;"></div>
+                        <div style="min-width:100%;display:flex;justify-content:center;padding:10px;"><img src="results/4.jpg" alt="Result" loading="lazy" style="max-height:480px;border-radius:14px;"></div>
+                        <div style="min-width:100%;display:flex;justify-content:center;padding:10px;"><img src="results/5.jpg" alt="Result" loading="lazy" style="max-height:480px;border-radius:14px;"></div>
+                        <div style="min-width:100%;display:flex;justify-content:center;padding:10px;"><img src="results/6.jpg" alt="Result" loading="lazy" style="max-height:480px;border-radius:14px;"></div>
                     </div>
-                    <button class="slider-arrow left" onclick="prevSlide()" style="position:absolute;top:50%;left:12px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,0.9);border:1px solid rgba(212,175,55,0.3);color:#FFD700;font-size:28px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;backdrop-filter:blur(8px);">‹</button>
-                    <button class="slider-arrow right" onclick="nextSlide()" style="position:absolute;top:50%;right:12px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,0.9);border:1px solid rgba(212,175,55,0.3);color:#FFD700;font-size:28px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;backdrop-filter:blur(8px);">›</button>
+                    <button onclick="prevSlide()" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,0.9);border:1px solid rgba(212,175,55,0.25);color:#FFD700;font-size:24px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;">‹</button>
+                    <button onclick="nextSlide()" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,0.9);border:1px solid rgba(212,175,55,0.25);color:#FFD700;font-size:24px;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;">›</button>
                 </div>
             </div>
-
-            <!-- Dots -->
-            <div class="flex items-center justify-center gap-3 mt-5" id="sliderDots"></div>
+            <div class="flex items-center justify-center gap-2 mt-4" id="sliderDots"></div>
         </div>
     </section>
 
     <!-- CTA -->
-    <section class="relative py-24 z-10">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gold/3 to-transparent"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
-            <div class="inline-block glass px-4 py-2 rounded-full mb-6">
-                <span class="text-gold text-xs tracking-[0.3em] font-display">BEREIT?</span>
-            </div>
+    <section class="relative py-20 z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block glass px-4 py-2 rounded-full mb-5"><span class="text-gold text-xs tracking-[0.3em] font-display">BEREIT?</span></div>
             <h2 class="font-display font-black text-4xl md:text-6xl mb-6">TIME TO <span class="gold-text">ELEVATE</span></h2>
-            <p class="text-xl text-gray-500 mb-10 max-w-xl mx-auto">250 Trader warten auf dich. Werde Teil der Elite.</p>
+            <p class="text-xl text-gray-500 mb-8 max-w-lg mx-auto">250 Trader warten auf dich. Werde Teil der Elite.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://t.me/GoldbankManager" target="_blank" class="glow-btn pulse-rings text-bank-900 font-display font-black text-xl px-12 py-5 rounded-2xl transition-all duration-300 hover:scale-110 inline-flex items-center space-x-3 relative z-10">
-                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span>KOSTENLOS STARTEN</span>
+                <a href="https://t.me/GoldbankManager" target="_blank" class="glow-btn pulse-rings text-bank-900 font-display font-black text-xl px-12 py-5 rounded-2xl transition-all duration-300 hover:scale-105 relative z-10">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    KOSTENLOS STARTEN
                 </a>
-                <span class="text-gray-500 text-sm">Keine Kreditkarte. Keine Kosten. Forever free.</span>
+                <span class="text-gray-600 text-sm">Keine Kreditkarte. Keine Kosten. Forever free.</span>
             </div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="relative py-20 z-10">
+    <section id="faq" class="relative py-16 z-10">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <div class="inline-block glass px-4 py-2 rounded-full mb-4">
-                    <span class="text-gold text-xs tracking-[0.3em] font-display">FAQ</span>
-                </div>
-                <h2 class="font-display font-bold text-4xl">FRAGEN <span class="gold-text">& ANTWORTEN</span></h2>
+            <div class="text-center mb-10">
+                <div class="inline-block glass px-4 py-2 rounded-full mb-4"><span class="text-gold text-xs tracking-[0.3em] font-display">FAQ</span></div>
+                <h2 class="font-display font-bold text-3xl">FRAGEN <span class="gold-text">& ANTWORTEN</span></h2>
             </div>
-            <div class="space-y-3">
-                <div class="glass-card p-6 rounded-2xl"><h3 class="font-semibold mb-2">Ist GoldBank wirklich kostenlos?</h3><p class="text-gray-400 text-sm">Ja. 100% kostenlos. Kein Premium, keine Kosten. Forever.</p></div>
-                <div class="glass-card p-6 rounded-2xl"><h3 class="font-semibold mb-2">Für wen ist GoldBank?</h3><p class="text-gray-400 text-sm">Anfänger bis Profis. Signale sind erklärt, Analysen nachvollziehbar, Community supported.</p></div>
-                <div class="glass-card p-6 rounded-2xl"><h3 class="font-semibold mb-2">Wie erhalte ich Zugang?</h3><p class="text-gray-400 text-sm">Klick auf "Jetzt beitreten" — du wirst direkt zu Telegram weitergeleitet. Instant Access.</p></div>
+            <div class="space-y-2">
+                <div class="glass-card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Ist GoldBank wirklich kostenlos?</h3><p class="text-gray-400 text-sm">Ja. 100% kostenlos. Kein Premium, keine Kosten. Forever.</p></div>
+                <div class="glass-card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Für wen ist GoldBank?</h3><p class="text-gray-400 text-sm">Anfänger bis Profis. Signale sind erklärt, Community supported.</p></div>
+                <div class="glass-card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Wie erhalte ich Zugang?</h3><p class="text-gray-400 text-sm">Klick auf "Jetzt beitreten" — du wirst direkt zu Telegram weitergeleitet.</p></div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="relative border-t border-gold/10 py-12 z-10">
+    <footer class="relative border-t border-gold/08 py-10 z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex items-center justify-center space-x-2 mb-4">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-dark via-gold to-gold-bright flex items-center justify-center"><svg class="w-5 h-5 text-bank-900" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-                <span class="font-display font-bold text-lg">GOLD<span class="text-gold">BANK</span></span>
+            <div class="flex items-center justify-center space-x-2 mb-3">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-gold-dark via-gold to-gold-bright flex items-center justify-center"><svg class="w-4 h-4 text-bank-900" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                <span class="font-display font-bold">GOLD<span class="text-gold">BANK</span></span>
             </div>
             <a href="https://t.me/GoldbankManager" target="_blank" class="text-gray-500 hover:text-gold text-sm">t.me/GoldbankManager</a>
-            <p class="text-gray-600 text-xs mt-4">© 2026 GoldBank Trading.</p>
-            <p class="text-gray-700 text-[11px] mt-3 max-w-lg mx-auto leading-relaxed">Trading birgt erhebliche Verlustrisiken. Nur mit Kapital handeln, dessen Verlust du verkraften kannst. Keine Anlageberatung. Vergangene Ergebnisse garantieren keine zukünftigen Gewinne.</p>
+            <p class="text-gray-600 text-xs mt-3">© 2026 GoldBank Trading.</p>
+            <p class="text-gray-700 text-[10px] mt-2 max-w-lg mx-auto leading-relaxed">Trading birgt erhebliche Verlustrisiken. Keine Anlageberatung. Vergangene Ergebnisse garantieren keine zukünftigen Gewinne.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-    // ========== THREE.JS BACKGROUND ==========
+    // ========== THROTTLED THREE.JS ==========
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-bg'), alpha: true, antialias: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
-    camera.position.z = 30;
+    const cam = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+    const rndr = new THREE.WebGLRenderer({ canvas: document.getElementById('three-bg'), alpha: true, antialias: false, powerPreference: 'low-power' });
+    rndr.setSize(innerWidth, innerHeight);
+    rndr.setPixelRatio(Math.min(devicePixelRatio, 1.4));
+    cam.position.z = 25;
 
-    const isMobile = window.innerWidth < 768;
-    const pCount = isMobile ? 120 : 350;
-    const pGeom = new THREE.BufferGeometry();
-    const pArr = new Float32Array(pCount * 3);
-    for (let i = 0; i < pCount * 3; i += 3) {
-        pArr[i] = (Math.random() - 0.5) * 55;
-        pArr[i+1] = (Math.random() - 0.5) * 38;
-        pArr[i+2] = (Math.random() - 0.5) * 22;
+    const isMob = innerWidth < 768;
+    const pc = isMob ? 100 : 200;
+    const pg = new THREE.BufferGeometry();
+    const pa = new Float32Array(pc * 3);
+    for (let i = 0; i < pc * 3; i += 3) { pa[i] = (Math.random()-0.5)*50; pa[i+1] = (Math.random()-0.5)*35; pa[i+2] = (Math.random()-0.5)*18; }
+    pg.setAttribute('position', new THREE.BufferAttribute(pa, 3));
+    const pm = new THREE.PointsMaterial({ size: 0.05, color: 0xD4AF37, blending: THREE.AdditiveBlending, transparent: true, opacity: 0.35 });
+    const pts = new THREE.Points(pg, pm); scene.add(pts);
+
+    const g = new THREE.Group();
+    const gs = [new THREE.IcosahedronGeometry(0.35,0), new THREE.OctahedronGeometry(0.28), new THREE.TetrahedronGeometry(0.25)];
+    const gc = isMob ? 3 : 5;
+    for (let i=0; i<gc; i++) {
+        const me = new THREE.Mesh(gs[i%3], new THREE.MeshBasicMaterial({ color: 0xD4AF37, wireframe: true, transparent: true, opacity: 0.07 }));
+        me.position.set((Math.random()-0.5)*44, (Math.random()-0.5)*30, -4-Math.random()*8);
+        me.userData = { rs: 0.0008+Math.random()*0.003 };
+        g.add(me);
     }
-    pGeom.setAttribute('position', new THREE.BufferAttribute(pArr, 3));
-    const pMat = new THREE.PointsMaterial({ size: isMobile ? 0.05 : 0.07, color: 0xD4AF37, blending: THREE.AdditiveBlending, transparent: true, opacity: isMobile ? 0.3 : 0.5 });
-    const particles = new THREE.Points(pGeom, pMat);
-    scene.add(particles);
+    scene.add(g);
 
-    const group = new THREE.Group();
-    const geos = [new THREE.IcosahedronGeometry(0.45, 0), new THREE.OctahedronGeometry(0.35), new THREE.TetrahedronGeometry(0.3), new THREE.DodecahedronGeometry(0.3, 0)];
-    const count = isMobile ? 4 : 7;
-    for (let i = 0; i < count; i++) {
-        const g = geos[i%4];
-        const m = new THREE.MeshBasicMaterial({ color: 0xD4AF37, wireframe: true, transparent: true, opacity: isMobile ? 0.06 : 0.12 });
-        const mesh = new THREE.Mesh(g, m);
-        mesh.position.set((Math.random()-0.5)*48, (Math.random()-0.5)*33, -6-Math.random()*12);
-        mesh.userData = { s: 0.2+Math.random()*0.6, rs: 0.001+Math.random()*0.004 };
-        group.add(mesh);
+    let mx=0, my=0, cl=0;
+    document.addEventListener('mousemove', e => { mx = (e.clientX/innerWidth-0.5)*2; my = (e.clientY/innerHeight-0.5)*1.5; });
+
+    function anim3d() {
+        requestAnimationFrame(anim3d);
+        cl += 0.004; pts.rotation.y += 0.0002;
+        g.children.forEach(c => { c.rotation.x += c.userData.rs; c.rotation.y += c.userData.rs*0.6; });
+        g.rotation.x += (my*0.01 - g.rotation.x)*0.015;
+        g.rotation.y += (mx*0.01 - g.rotation.y)*0.015;
+        rndr.render(scene, cam);
     }
-    scene.add(group);
+    anim3d();
+    addEventListener('resize', () => { cam.aspect = innerWidth/innerHeight; cam.updateProjectionMatrix(); rndr.setSize(innerWidth, innerHeight); });
 
-    let mX = 0, mY = 0, clock = 0;
-    document.addEventListener('mousemove', e => { mX = (e.clientX/window.innerWidth-0.5)*3; mY = (e.clientY/window.innerHeight-0.5)*2; });
-
-    function anim3D() {
-        requestAnimationFrame(anim3D);
-        clock += 0.005;
-        particles.rotation.y += 0.0003;
-        group.children.forEach(c => { c.rotation.x += c.userData.rs; c.rotation.y += c.userData.rs*0.7; });
-        group.rotation.x += (mY*0.015 - group.rotation.x)*0.02;
-        group.rotation.y += (mX*0.015 - group.rotation.y)*0.02;
-        renderer.render(scene, camera);
-    }
-    anim3D();
-    window.addEventListener('resize', () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
-
-    // ========== CUSTOM CURSOR ==========
-    if (!isMobile) {
-        const glow = document.getElementById('cursorGlow');
+    // ========== CURSOR DOT ==========
+    if (!isMob) {
         const dot = document.getElementById('cursorDot');
-        let gx = 0, gy = 0, dx = 0, dy = 0;
-        document.addEventListener('mousemove', e => { gx = e.clientX; gy = e.clientY; dx = e.clientX; dy = e.clientY; dot.style.left = dx+'px'; dot.style.top = dy+'px'; });
-        function animCursor() {
-            requestAnimationFrame(animCursor);
-            const lx = parseFloat(glow.style.left||0), ly = parseFloat(glow.style.top||0);
-            glow.style.left = (lx + (gx-lx)*0.08)+'px';
-            glow.style.top = (ly + (gy-ly)*0.08)+'px';
-        }
-        animCursor();
-        glow.style.left = '50%'; glow.style.top = '50%';
+        document.addEventListener('mousemove', e => { dot.style.left = e.clientX+'px'; dot.style.top = e.clientY+'px'; });
     }
 
     // ========== TYPEWRITER ==========
-    const texts = [
-        "Elite-Community mit präzisen Signalen und KI-gestützter Analyse.",
-        "250+ Trader. Eine Brotherhood. Dein Edge im Markt.",
-        "Keine Gurus. Nur echte Trader mit echten Results."
-    ];
-    let txtIdx = 0, charIdx = 0, isDeleting = false;
+    const texts = ['Elite-Community mit präzisen Signalen.', '250+ Trader. Dein Edge im Markt.', 'Keine Gurus. Nur echte Results.'];
+    let ti=0, ci=0, del=false;
     const tw = document.getElementById('typewriter');
-    function type() {
-        const current = texts[txtIdx];
-        if (isDeleting) { tw.textContent = current.substring(0, charIdx-1); charIdx--; }
-        else { tw.textContent = current.substring(0, charIdx+1); charIdx++; }
-        if (!isDeleting && charIdx === current.length) { setTimeout(() => isDeleting = true, 2000); }
-        else if (isDeleting && charIdx === 0) { isDeleting = false; txtIdx = (txtIdx+1)%texts.length; }
-        setTimeout(type, isDeleting ? 30 : 60);
-    }
-    type();
+    (function type() {
+        const cur = texts[ti];
+        tw.textContent = cur.substring(0, del?--ci:++ci);
+        if (!del && ci === cur.length) setTimeout(() => del=true, 1800);
+        else if (del && ci === 0) { del=false; ti=(ti+1)%texts.length; }
+        setTimeout(type, del?25:55);
+    })();
 
-    // ========== COUNT UP ON SCROLL ==========
+    // ========== COUNT UP ==========
     let counted = false;
-    function countUp() {
-        if (counted) return;
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.querySelectorAll('[data-count]').forEach(el => {
-                        const target = parseInt(el.dataset.count);
-                        let current = 0;
-                        const step = Math.ceil(target/40);
-                        const intv = setInterval(() => { current += step; if (current >= target) { el.textContent = target; clearInterval(intv); } else el.textContent = current; }, 40);
-                    });
-                    counted = true;
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0.3 });
-        document.querySelectorAll('.grid.grid-cols-2.md\\:grid-cols-4, #vision .grid').forEach(g => observer.observe(g));
-    }
-    countUp();
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting && !counted) {
+                e.target.querySelectorAll('[data-count]').forEach(el => {
+                    const t = +el.dataset.count, step = Math.ceil(t/35);
+                    let c = 0;
+                    const iv = setInterval(() => { c+=step; if(c>=t){el.textContent=t;clearInterval(iv);} else el.textContent=c; }, 35);
+                });
+                counted = true;
+            }
+        });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('#vision .grid').forEach(g => obs.observe(g));
 
-    // ========== FOMO COUNTER ==========
-    function updateFomo() { const fc = document.getElementById('fomoCount'); const v = Math.floor(Math.random()*8)+22; fc.textContent = v; } setInterval(updateFomo, 8000);
+    // ========== FOMO / ONLINE ==========
+    setInterval(() => { document.getElementById('fomoCount').textContent = Math.floor(Math.random()*10)+19; }, 7000);
+    setInterval(() => { document.getElementById('onlineCount').textContent = Math.floor(Math.random()*45)+215; }, 14000);
 
-    // ========== ONLINE COUNT ==========
-    function updateOnline() { const oc = document.getElementById('onlineCount'); oc.textContent = Math.floor(Math.random()*40)+220; } setInterval(updateOnline, 15000);
-
-    // ========== LIVE JOIN NOTIFICATIONS ==========
-    const names = ["Max", "Leon", "Luca", "David", "Felix", "Jonas", "Tim", "Niklas", "Tom", "Paul", "Finn", "Ben", "Elias", "Noah", "Luis", "Moritz", "Jan", "Lars", "Sven", "Chris"];
+    // ========== JOIN NOTIFICATIONS ==========
+    const names = ['Max','Leon','Luca','David','Felix','Jonas','Tim','Niklas','Tom','Paul','Finn','Ben'];
     function showNotif() {
         const n = names[Math.floor(Math.random()*names.length)];
-        const area = document.getElementById('notif-area');
-        const div = document.createElement('div');
-        div.className = 'notif glass rounded-xl px-4 py-3 text-sm flex items-center space-x-2';
-        div.innerHTML = `<span class="text-green-400 text-lg">✓</span><span><span class="text-white font-semibold">${n}</span> <span class="text-gray-400">ist beigetreten</span></span>`;
-        area.appendChild(div);
-        setTimeout(() => div.remove(), 5000);
+        const d = document.createElement('div');
+        d.className = 'notif glass rounded-xl px-4 py-2.5 text-sm flex items-center gap-2 gpu';
+        d.innerHTML = '<span class="text-green-400">✓</span><span class="text-white font-semibold">'+n+'</span><span class="text-gray-400">ist beigetreten</span>';
+        document.getElementById('notif-area').appendChild(d);
+        setTimeout(() => d.remove(), 4000);
     }
-    setInterval(() => { if (Math.random() > 0.6) showNotif(); }, 8000);
+    setInterval(() => { if (Math.random() > 0.55) showNotif(); }, 7500);
+    setTimeout(showNotif, 3000);
 
     // ========== RESULT SLIDER ==========
-    const sliderTrack = document.getElementById('sliderTrack');
-    const sliderDots = document.getElementById('sliderDots');
-    const slides = sliderTrack.querySelectorAll('.slider-slide');
-    let currentSlide = 0, autoPlay;
-    const SLIDE_INTERVAL = 4000;
-
-    slides.forEach((_,i) => {
-        const dot = document.createElement('button');
-        dot.style.cssText = `width:10px;height:10px;border-radius:50%;background:rgba(212,175,55,${i===0?0.7:0.2});border:none;cursor:pointer;transition:all 0.3s;`;
-        dot.onclick = () => goToSlide(i);
-        sliderDots.appendChild(dot);
+    const track = document.getElementById('sliderTrack');
+    const dotsC = document.getElementById('sliderDots');
+    const sls = track.children;
+    let cs = 0, ap;
+    [...sls].forEach((_,i) => {
+        const d = document.createElement('button');
+        d.style.cssText = `width:8px;height:8px;border-radius:50%;background:rgba(212,175,55,${i===0?.6:.15});border:none;cursor:pointer;transition:all 0.25s;`;
+        d.onclick = () => gts(i);
+        dotsC.appendChild(d);
     });
-    const dots = sliderDots.children;
+    const dts = dotsC.children;
+    function upd() { track.style.transform = `translateX(-${cs*100}%)`; [...dts].forEach((d,i) => d.style.background = `rgba(212,175,55,${i===cs?.6:.15})`); }
+    function nextSlide() { cs=(cs+1)%sls.length; upd(); rst(); }
+    function prevSlide() { cs=(cs-1+sls.length)%sls.length; upd(); rst(); }
+    function gts(i) { cs=i; upd(); rst(); }
+    function rst() { clearInterval(ap); ap=setInterval(nextSlide, 4000); }
+    ap=setInterval(nextSlide, 4000);
 
-    function upd() {
-        sliderTrack.style.transform = `translateX(-${currentSlide*100}%)`;
-        [...dots].forEach((d,i) => d.style.background = `rgba(212,175,55,${i===currentSlide?0.7:0.2})`);
-    }
-    function nextSlide() { currentSlide = (currentSlide+1)%slides.length; upd(); resetAP(); }
-    function prevSlide() { currentSlide = (currentSlide-1+slides.length)%slides.length; upd(); resetAP(); }
-    function goToSlide(i) { currentSlide = i; upd(); resetAP(); }
-    function resetAP() { clearInterval(autoPlay); autoPlay = setInterval(nextSlide, SLIDE_INTERVAL); }
-    autoPlay = setInterval(nextSlide, SLIDE_INTERVAL);
+    let ts=0;
+    document.getElementById('slider').addEventListener('touchstart', e => { ts=e.changedTouches[0].screenX; });
+    document.getElementById('slider').addEventListener('touchend', e => { const d=ts-e.changedTouches[0].screenX; if(d>40)nextSlide(); if(d<-40)prevSlide(); });
 
-    let tsX = 0;
-    document.getElementById('slider').addEventListener('touchstart', e => { tsX = e.changedTouches[0].screenX; });
-    document.getElementById('slider').addEventListener('touchend', e => { const d = tsX - e.changedTouches[0].screenX; if (d>50) nextSlide(); if (d<-50) prevSlide(); });
-
-    // ========== 3D TILT ON HOVER ==========
-    document.querySelectorAll('.tilt').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left)/rect.width - 0.5;
-            const y = (e.clientY - rect.top)/rect.height - 0.5;
-            card.querySelector('.tilt-inner').style.transform = `rotateY(${x*12}deg) rotateX(${-y*12}deg)`;
+    // ========== 3D TILT (OPTIMIZED) ==========
+    document.querySelectorAll('.tilt').forEach(c => {
+        c.addEventListener('mousemove', e => {
+            const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5;
+            c.querySelector('.tilt-inner').style.transform = `rotateY(${x*8}deg) rotateX(${-y*8}deg)`;
         });
-        card.addEventListener('mouseleave', () => { card.querySelector('.tilt-inner').style.transform = 'rotateY(0) rotateX(0)'; });
+        c.addEventListener('mouseleave', () => c.querySelector('.tilt-inner').style.transform = 'rotateY(0) rotateX(0)');
     });
-
-    // Show first join notification after 3s
-    setTimeout(showNotif, 3000);
     </script>
 </body>
 </html>
