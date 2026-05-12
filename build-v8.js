@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldBank — Der Gold-Standard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
+// GoldBank v8.0 — THE FOUNDRY
+// Komplett neues Design-Fundament für GitHub Pages
+// Konzept: Cinematic Luxury — immersive Goldwelt mit Tiefe
 
+const fs = require('fs');
+const output = 'C:/Users/Hacer/.openclaw/workspace/amofx-landing/index.html';
+
+const AE = '&auml;';
+const OE = '&ouml;';
+const UE = '&uuml;';
+const SZ = '&szlig;';
+const EUR = '&euro;';
+const a = AE, o = OE, u = UE, ss = SZ, e = EUR;
+
+const CSS = `
 :root {
   --gold: #C8A84E;
   --gold2: #E8C95D;
@@ -618,11 +624,9 @@ footer .disc {
     animation-iteration-count: 1 !important;
   }
 }
+`;
 
-</style>
-</head>
-<body>
-
+const BODY = `
 <div id="universe"></div>
 <div class="notif-stack" id="notifs"></div>
 
@@ -634,7 +638,7 @@ footer .disc {
       <span class="fill">Standard.</span>
     </h1>
     <p class="hero-tagline">
-      Pr&auml;zise Signale. Live-Analysen. Eine Brotherhood aus 250 Elite-Tradern.
+      Pr${a}zise Signale. Live-Analysen. Eine Brotherhood aus 250 Elite-Tradern.
       Kein Bullshit &mdash; nur nachweisbare Results.
     </p>
     <div class="cta-group">
@@ -657,29 +661,29 @@ footer .disc {
   </div>
 
   <div class="fomo-strip">
-    <div class="fomo-item">&#x1F525; Nur noch <strong id="fomoNum">23</strong> Pl&auml;tze frei</div>
+    <div class="fomo-item">&#x1F525; Nur noch <strong id="fomoNum">23</strong> Pl${a}tze frei</div>
     <div class="fomo-item">&#x2B50; <strong>4.9/5</strong> Community-Rating</div>
     <div class="fomo-item">&#x1F680; <strong id="onlineNum">247</strong> Trader online</div>
   </div>
 
   <div class="cards-section" id="features">
     <div class="section-eyebrow">Was wir bieten</div>
-    <h2 class="section-title">Drei S&auml;ulen. <em>Ein Versprechen.</em></h2>
+    <h2 class="section-title">Drei S${a}ulen. <em>Ein Versprechen.</em></h2>
     <div class="card-grid">
       <div class="card">
         <div class="card-icon">&#x1F3AF;</div>
-        <h3>Pr&auml;zise <span>Signale</span></h3>
-        <p>Entry, Stop-Loss und Take-Profit glasklar definiert. Jedes Setup charttechnisch fundiert mit KI-gest&uuml;tzt Scannern. Kein Ratespiel.</p>
+        <h3>Pr${a}zise <span>Signale</span></h3>
+        <p>Entry, Stop-Loss und Take-Profit glasklar definiert. Jedes Setup charttechnisch fundiert mit KI-gest${u}tzt Scannern. Kein Ratespiel.</p>
       </div>
       <div class="card">
         <div class="card-icon">&#x1F4C8;</div>
         <h3>Live <span>Analyse</span></h3>
-        <p>Echtzeit-Chartanalyse direkt im Stream. Verstehe WARUM ein Trade l&auml;uft &mdash; nicht nur blind folgen. Bildung &uuml;ber alles.</p>
+        <p>Echtzeit-Chartanalyse direkt im Stream. Verstehe WARUM ein Trade l${a}uft &mdash; nicht nur blind folgen. Bildung ${u}ber alles.</p>
       </div>
       <div class="card">
         <div class="card-icon">&#x1F91D;</div>
         <h3>Brother<span>hood</span></h3>
-        <p>250 Elite-Trader auf einer Mission. T&auml;glicher Austausch auf Augenh&ouml;he. Keine falschen Gurus &mdash; eine Familie die gemeinsam w&auml;chst.</p>
+        <p>250 Elite-Trader auf einer Mission. T${a}glicher Austausch auf Augenh${o}he. Keine falschen Gurus &mdash; eine Familie die gemeinsam w${a}chst.</p>
       </div>
     </div>
   </div>
@@ -699,7 +703,7 @@ footer .disc {
 
   <div class="cta-footer">
     <div class="section-eyebrow">Bereit?</div>
-    <h2>Zeit f&uuml;r deinen <em>Edge.</em></h2>
+    <h2>Zeit f${u}r deinen <em>Edge.</em></h2>
     <div class="gold-line"></div>
     <div class="cta-group" style="opacity:1;animation:none;margin-top:16px">
       <a href="https://t.me/GoldbankManager" target="_blank" class="btn-gold">
@@ -717,8 +721,8 @@ footer .disc {
       <p>Ja. 100%. Kein Premium-Tier, keine versteckten Kosten, keine Probeabos. Dauerhaft gratis.</p>
     </div>
     <div class="faq-item">
-      <summary>F&uuml;r wen ist die Community geeignet?</summary>
-      <p>F&uuml;r jeden, der ernsthaft traden m&ouml;chte &mdash; vom Anf&auml;nger bis zum Profi. Unsere Signale sind erkl&auml;rt, Analysen nachvollziehbar, Community unterst&uuml;tzt.</p>
+      <summary>F${u}r wen ist die Community geeignet?</summary>
+      <p>F${u}r jeden, der ernsthaft traden m${o}chte &mdash; vom Anf${a}nger bis zum Profi. Unsere Signale sind erkl${a}rt, Analysen nachvollziehbar, Community unterst${u}tzt.</p>
     </div>
     <div class="faq-item">
       <summary>Wie erhalte ich Zugang?</summary>
@@ -726,7 +730,7 @@ footer .disc {
     </div>
     <div class="faq-item">
       <summary>Was macht GoldBank anders?</summary>
-      <p>Bildung statt Abh&auml;ngigkeit. Du lernst WARUM ein Trade funktioniert &mdash; nicht nur blind kopieren. Das macht dich langfristig profitabel.</p>
+      <p>Bildung statt Abh${a}ngigkeit. Du lernst WARUM ein Trade funktioniert &mdash; nicht nur blind kopieren. Das macht dich langfristig profitabel.</p>
     </div>
   </div>
 
@@ -734,12 +738,12 @@ footer .disc {
     <div class="flogo">GOLD<em>BANK</em></div>
     <a href="https://t.me/GoldbankManager" target="_blank">t.me/GoldbankManager</a>
     <p style="color:rgba(255,255,255,.15);font-size:10px;margin-top:6px">&copy; 2026 GoldBank Trading. Alle Rechte vorbehalten.</p>
-    <p class="disc">Trading birgt erhebliche Verlustrisiken. Handle nur mit Kapital, dessen Verlust du verkraften kannst. Keine Anlageberatung. Vergangene Ergebnisse garantieren keine zuk&uuml;nftigen Gewinne.</p>
+    <p class="disc">Trading birgt erhebliche Verlustrisiken. Handle nur mit Kapital, dessen Verlust du verkraften kannst. Keine Anlageberatung. Vergangene Ergebnisse garantieren keine zuk${u}nftigen Gewinne.</p>
   </footer>
 </main>
+`;
 
-<script>
-
+const JS = `
 (function(){
   // === GOLDEN DUST ===
   var u = document.getElementById("universe");
@@ -754,9 +758,9 @@ footer .disc {
   })(i);
 
   // === MARQUEE ===
-  var wins = ["XAUUSD +2.130\u20ac","EURUSD +890\u20ac","NASDAQ +3.450\u20ac","BTC/USD +1.560\u20ac","GBPJPY +780\u20ac","DAX +2.500\u20ac","US30 +1.200\u20ac"];
+  var wins = ["XAUUSD +2.130\\u20ac","EURUSD +890\\u20ac","NASDAQ +3.450\\u20ac","BTC/USD +1.560\\u20ac","GBPJPY +780\\u20ac","DAX +2.500\\u20ac","US30 +1.200\\u20ac"];
   var mt = "";
-  for (var i = 0; i < 26; i++) mt += '<span class="marquee-item">\u{1F3C6} <strong>' + wins[i % wins.length] + '</strong></span>';
+  for (var i = 0; i < 26; i++) mt += '<span class="marquee-item">\\u{1F3C6} <strong>' + wins[i % wins.length] + '</strong></span>';
   document.getElementById("marquee").innerHTML = mt + mt;
 
   // === COUNTERS ===
@@ -773,7 +777,7 @@ footer .disc {
     var n = names[Math.floor(Math.random() * names.length)];
     var el = document.createElement("div");
     el.className = "notif";
-    el.innerHTML = '<span style="color:#4ade80;font-weight:700">\u2713</span> <b>' + n + '</b> ist beigetreten';
+    el.innerHTML = '<span style="color:#4ade80;font-weight:700">\\u2713</span> <b>' + n + '</b> ist beigetreten';
     document.getElementById("notifs").appendChild(el);
     setTimeout(function(){ el.remove(); }, 3600);
     setTimeout(loop, 5000 + Math.random() * 6000);
@@ -796,7 +800,15 @@ footer .disc {
     rs.scrollLeft = scrollLeft - (x - startX) * 1.5;
   });
 })();
+`;
 
-</script>
-</body>
-</html>
+const HTML = '<!DOCTYPE html>\n<html lang="de">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>GoldBank — Der Gold-Standard</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">\n<style>\n' + CSS + '\n</style>\n</head>\n<body>\n' + BODY + '\n<script>\n' + JS + '\n</script>\n</body>\n</html>';
+
+fs.writeFileSync(output, HTML, 'utf8');
+const size = fs.statSync(output).size;
+console.log('v8.0 written: ' + size + ' bytes');
+
+const check = fs.readFileSync(output, 'utf8');
+['auml;','ouml;','uuml;','szlig;','euro;','Pl','tze'].forEach(function(w) {
+  console.log(check.includes(w) ? 'OK: ' + w : 'XX: ' + w);
+});
