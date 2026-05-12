@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -11,27 +11,32 @@
         :root{--g:#D4AF37;--gb:#FFD700;--gd:#B8960C;--bg:#050510}
         *{scroll-behavior:smooth}body{background:var(--bg);font-family:'Inter',sans-serif;overflow-x:hidden}
         .glass{background:rgba(14,14,34,0.85);border:1px solid rgba(212,175,55,0.1)}
-        .card{background:linear-gradient(135deg,rgba(14,14,34,0.92),rgba(10,10,24,0.92));border:1px solid rgba(212,175,55,0.07);transition:transform .35s ease}
-        .card:hover{transform:translateY(-3px)}
-        .g-t{background:linear-gradient(135deg,#FFE566,#FFD700,#D4AF37,#FFD700,#FFE566);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .g-btn{background:linear-gradient(135deg,#B8960C,#D4AF37,#FFD700,#D4AF37,#B8960C);background-size:300% 300%;animation:bs 3s ease infinite;box-shadow:0 0 30px rgba(212,175,55,.2);display:inline-flex;align-items:center;gap:8px}@keyframes bs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-        .g-btn:hover{box-shadow:0 0 50px rgba(212,175,55,.35);transform:translateY(-2px)}
+        .card{background:linear-gradient(135deg,rgba(14,14,34,0.92),rgba(10,10,24,0.92));border:1px solid rgba(212,175,55,0.08);transition:transform .35s ease,border-color .35s ease}
+        .card:hover{transform:translateY(-3px);border-color:rgba(212,175,55,0.2)}
+        .g-t{background:linear-gradient(135deg,#FFE566,#FFD700,#D4AF37,#FFD700,#FFE566);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:gs 4s ease-in-out infinite}
+        @keyframes gs{0%,100%{background-position:0% center}50%{background-position:200% center}}
+        .g-btn{background:linear-gradient(135deg,#B8960C,#D4AF37,#FFD700,#D4AF37,#B8960C);background-size:300% 300%;animation:bs 3s ease infinite;box-shadow:0 0 30px rgba(212,175,55,.2);display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;font-weight:700;cursor:pointer;border:none;color:#050510;transition:all .3s;position:relative;z-index:1;text-decoration:none}
+        @keyframes bs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .g-btn:hover{box-shadow:0 0 50px rgba(212,175,55,.4);transform:translateY(-3px)}
+        .g-btn-lg{padding:16px 40px;font-size:18px;border-radius:18px}
+        .g-btn-sm{padding:10px 22px;font-size:13px;border-radius:12px}
+        .g-btn-xl{padding:20px 48px;font-size:22px;border-radius:20px}
         .grid-bg{background-image:linear-gradient(rgba(212,175,55,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,.02) 1px,transparent 1px);background-size:70px 70px}
         .ticker-wrap{overflow:hidden;border-top:1px solid rgba(212,175,55,.06);border-bottom:1px solid rgba(212,175,55,.06)}
         .ticker{display:flex;animation:tick 35s linear infinite;width:max-content}@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .typewriter::after{content:'|';animation:bl .8s step-end infinite;color:var(--gb)}@keyframes bl{50%{opacity:0}}
-        .notif{animation:nIn .35s ease-out,nOut .35s ease-in 3s forwards}@keyframes nIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}@keyframes nOut{to{opacity:0}}
+        .notif{animation:nIn .35s ease-out,nOut .35s ease-in 3s forwards}@keyframes nIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}@keyframes nOut{to{opacity:0;transform:translateY(-8px)}}
         .bglow{position:relative;border-radius:24px}
         .bglow::after{content:'';position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(45deg,transparent 30%,rgba(212,175,55,.2) 45%,transparent 50%,rgba(212,175,55,.2) 65%,transparent 80%);background-size:300% 300%;animation:bm 5s linear infinite;z-index:-1}@keyframes bm{0%{background-position:0% 0%}100%{background-position:300% 300%}}
         @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+        .text-link{color:rgba(255,255,255,0.85);font-weight:600;padding:12px 24px;border-radius:12px;transition:all .3s;border:1px solid rgba(212,175,55,0.12);background:rgba(14,14,34,0.85);text-decoration:none;display:inline-flex;align-items:center;font-size:14px}
+        .text-link:hover{background:rgba(255,255,255,0.04)}
     </style>
 </head>
 <body class="text-white">
 
-<!-- Join Notifications -->
 <div id="na" style="position:fixed;bottom:16px;right:16px;z-index:9998;display:flex;flex-direction:column;gap:6px;pointer-events:none"></div>
 
-<!-- Nav -->
 <nav class="fixed top-0 left-0 right-0 z-50" style="background:rgba(5,5,16,.88);height:48px">
     <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -39,155 +44,135 @@
             <span class="font-display font-bold text-base tracking-wider">GOLD<span class="text-gold">BANK</span></span>
         </div>
         <div class="hidden md:flex items-center gap-4">
-            <a href="#vision" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">VISION</a>
-            <a href="#features" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">FEATURES</a>
-            <a href="#results" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">RESULTS</a>
+            <a href="#vision" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">Vision</a>
+            <a href="#features" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">Features</a>
+            <a href="#results" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">Results</a>
             <a href="#faq" class="text-gray-400 hover:text-gold text-xs tracking-wide transition-colors">FAQ</a>
         </div>
-        <a href="https://t.me/GoldbankManager" target="_blank" class="g-btn text-bank-900 font-display font-bold text-[11px] px-3.5 py-2 rounded-lg transition-all duration-300 hover:scale-105 relative z-10">JOIN</a>
+        <a href="https://t.me/GoldbankManager" target="_blank" class="g-btn g-btn-sm">Beitreten</a>
     </div>
 </nav>
 
-<!-- Hero -->
 <section id="vision" class="relative min-h-screen flex items-center justify-center grid-bg" style="padding-top:48px">
     <div class="absolute inset-0 bg-gradient-to-b from-bank-900 via-transparent to-bank-900 z-[1]"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 text-center">
         <div class="inline-flex items-center gap-3 glass px-4 py-2.5 rounded-full mb-6">
             <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span></span>
-            <span class="text-sm text-gray-300 tracking-wider"><span id="oc">247</span> TRADER ONLINE</span>
+            <span class="text-sm text-gray-300 tracking-wider"><span id="oc">247</span> Trader online</span>
         </div>
-        <h1 class="font-display font-black text-5xl md:text-7xl lg:text-[80px] leading-none mb-4 tracking-tight">DOMINIERE<br><span class="g-t">DEN MARKT</span></h1>
+        <h1 class="font-display font-black text-5xl md:text-7xl lg:text-[80px] leading-none mb-4 tracking-tight">Dominiere<br><span class="g-t">den Markt</span></h1>
         <p class="text-lg text-gray-400 max-w-xl mx-auto mb-5 font-light typewriter" id="tw"></p>
-        <div class="flex items-center justify-center mb-5"><div class="glass px-4 py-2 rounded-full text-sm">🔥 Nur noch <span class="text-gold-bright font-bold" id="fc">27</span> Plätze</div></div>
+        <div class="flex items-center justify-center mb-5"><div class="glass px-4 py-2 rounded-full text-sm">&#x1F525; Nur noch <span class="text-gold-bright font-bold" id="fc">27</span> freie Pl&auml;tze</div></div>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
-            <a href="https://t.me/GoldbankManager" target="_blank" class="g-btn text-bank-900 font-display font-bold text-lg px-10 py-4 rounded-2xl transition-all duration-300 hover:scale-105 relative z-10">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                JETZT KOSTENLOS BEITRETEN
-            </a>
-            <a href="#results" class="glass text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/5 text-sm">Results ↓</a>
+            <a href="https://t.me/GoldbankManager" target="_blank" class="g-btn g-btn-lg">&#x2714; Jetzt kostenlos beitreten</a>
+            <a href="#results" class="text-link">Results ansehen &#x2193;</a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto">
             <div class="card rounded-2xl p-5 text-center"><div class="font-display font-black text-3xl g-t">250+</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">AKTIVE TRADER</div></div>
-            <div class="card rounded-2xl p-5 text-center"><div class="font-display font-black text-3xl g-t">94%</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">WIN-RATE (30D)</div></div>
+            <div class="card rounded-2xl p-5 text-center"><div class="font-display font-black text-3xl g-t">94%</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">WIN-RATE (30 TAGE)</div></div>
             <div class="card rounded-2xl p-5 text-center"><div class="font-display font-black text-3xl g-t">24/7</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">SUPPORT</div></div>
             <div class="card rounded-2xl p-5 text-center"><div class="font-display font-black text-3xl g-t">#1</div><div class="text-gray-500 text-[11px] mt-1 tracking-wider">COMMUNITY</div></div>
         </div>
     </div>
 </section>
 
-<!-- Ticker -->
 <div class="ticker-wrap py-2 relative z-10">
-    <div class="ticker"><span class="text-gold text-xs mx-6">🏆 +2.130€ XAUUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +890€ EURUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +3.450€ NASDAQ</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +1.560€ BTC</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +780€ GBPJPY</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +2.130€ XAUUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +890€ EURUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +3.450€ NASDAQ</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6">🏆 +1.560€ BTC</span></div>
+    <div class="ticker"><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +2.130&euro; XAUUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +890&euro; EURUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +3.450&euro; NASDAQ</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +1.560&euro; BTC</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +780&euro; GBPJPY</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +2.130&euro; XAUUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +890&euro; EURUSD</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +3.450&euro; NASDAQ</span><span class="text-gray-600 mx-6">|</span><span class="text-gold text-xs mx-6 whitespace-nowrap">&#x1F3C6; +1.560&euro; BTC</span></div>
 </div>
 
-<!-- Features -->
 <section id="features" class="relative py-14 z-10">
     <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-10">
             <div class="inline-block glass px-4 py-2 rounded-full mb-4"><span class="text-gold text-xs tracking-[.3em] font-display">DAS BIETEN WIR</span></div>
-            <h2 class="font-display font-bold text-4xl md:text-6xl mb-2">DEIN <span class="g-t">EDGE</span></h2>
+            <h2 class="font-display font-bold text-4xl md:text-6xl mb-2">Dein <span class="g-t">Edge</span></h2>
+            <p class="text-gray-500 text-sm">Drei S&auml;ulen. Ein Ziel: Deine Profitabilit&auml;t.</p>
         </div>
         <div class="grid md:grid-cols-3 gap-4">
-            <div class="card rounded-3xl p-6"><div class="w-10 h-10 bg-gradient-to-br from-g/15 to-g/08 rounded-2xl flex items-center justify-center mb-4 border border-g/15"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><h3 class="font-display font-bold text-lg mb-1">ELITE <span class="text-gold">SIGNALE</span></h3><p class="text-gray-400 text-sm">Entry, SL & TP präzise definiert. Charttechnisch fundiert.</p></div>
-            <div class="card rounded-3xl p-6"><div class="w-10 h-10 bg-gradient-to-br from-g/15 to-g/08 rounded-2xl flex items-center justify-center mb-4 border border-g/15"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><h3 class="font-display font-bold text-lg mb-1">LIVE <span class="text-gold">ANALYSE</span></h3><p class="text-gray-400 text-sm">Echtzeit-Charts im Stream. Verstehe WARUM, nicht nur WAS.</p></div>
-            <div class="card rounded-3xl p-6"><div class="w-10 h-10 bg-gradient-to-br from-g/15 to-g/08 rounded-2xl flex items-center justify-center mb-4 border border-g/15"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div><h3 class="font-display font-bold text-lg mb-1">BROTHER<span class="text-gold">HOOD</span></h3><p class="text-gray-400 text-sm">250+ Trader. Täglicher Austausch. Nur Winners.</p></div>
+            <div class="card rounded-3xl p-6"><div class="w-10 h-10 bg-gradient-to-br from-g/15 to-g/08 rounded-2xl flex items-center justify-center mb-4 border border-g/15"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><h3 class="font-display font-bold text-lg mb-1">Pr&auml;zise <span class="text-gold">Signale</span></h3><p class="text-gray-400 text-sm">Entry, SL &amp; TP klar definiert. Charttechnisch fundiert mit KI-gest&uuml;tzten Scannern.</p></div>
+            <div class="card rounded-3xl p-6"><div class="w-10 h-10 bg-gradient-to-br from-g/15 to-g/08 rounded-2xl flex items-center justify-center mb-4 border border-g/15"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><h3 class="font-display font-bold text-lg mb-1">Live <span class="text-gold">Analyse</span></h3><p class="text-gray-400 text-sm">Echtzeit-Marktanalyse im Stream. Verstehe WARUM ein Trade funktioniert, nicht nur WAS.</p></div>
+            <div class="card rounded-3xl p-6"><div class="w-10 h-10 bg-gradient-to-br from-g/15 to-g/08 rounded-2xl flex items-center justify-center mb-4 border border-g/15"><svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div><h3 class="font-display font-bold text-lg mb-1">Brother<span class="text-gold">hood</span></h3><p class="text-gray-400 text-sm">250+ Trader auf einer Mission. T&auml;glicher Austausch auf Augenh&ouml;he. Keine Gurus &ndash; nur Gewinner.</p></div>
         </div>
     </div>
 </section>
 
-<!-- Results -->
 <section id="results" class="relative py-12 z-10">
     <div class="absolute inset-0 bg-gradient-to-r from-g/2 via-transparent to-g/2"></div>
     <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-6">
             <div class="inline-block glass px-4 py-2 rounded-full mb-3"><span class="text-gold text-xs tracking-[.3em] font-display">PERFORMANCE</span></div>
-            <h2 class="font-display font-bold text-3xl md:text-5xl mb-1">UNSERE <span class="g-t">RESULTS</span></h2>
+            <h2 class="font-display font-bold text-3xl md:text-5xl mb-1">Unsere <span class="g-t">Results</span></h2>
+            <p class="text-gray-500 text-sm">Echte Trades. Kein Fake. Transparent.</p>
         </div>
         <div class="bglow max-w-4xl mx-auto">
             <div class="card rounded-3xl" id="slider" style="position:relative;overflow:hidden">
                 <div id="st" style="display:flex;transition:transform .5s ease">
-                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="results/1.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px"></div>
-                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="results/2.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px"></div>
-                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="results/3.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px"></div>
-                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="results/4.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px"></div>
-                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="results/5.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px"></div>
+                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="1.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px;max-width:100%"></div>
+                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="2.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px;max-width:100%"></div>
+                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="3.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px;max-width:100%"></div>
+                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="4.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px;max-width:100%"></div>
+                    <div style="min-width:100%;display:flex;justify-content:center;padding:8px"><img src="5.jpg" alt="Result" loading="lazy" style="max-height:460px;border-radius:12px;max-width:100%"></div>
                 </div>
-                <button onclick="ps()" style="position:absolute;top:50%;left:6px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,.9);border:1px solid rgba(212,175,55,.2);color:#FFD700;font-size:22px;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">‹</button>
-                <button onclick="ns()" style="position:absolute;top:50%;right:6px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,.9);border:1px solid rgba(212,175,55,.2);color:#FFD700;font-size:22px;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">›</button>
+                <button onclick="ps()" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,.92);border:1px solid rgba(212,175,55,.3);color:#FFD700;font-size:24px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;line-height:1" onmouseover="this.style.background='rgba(212,175,55,.15)'" onmouseout="this.style.background='rgba(14,14,34,.92)'">&#8249;</button>
+                <button onclick="ns()" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);z-index:10;background:rgba(14,14,34,.92);border:1px solid rgba(212,175,55,.3);color:#FFD700;font-size:24px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;line-height:1" onmouseover="this.style.background='rgba(212,175,55,.15)'" onmouseout="this.style.background='rgba(14,14,34,.92)'">&#8250;</button>
             </div>
         </div>
         <div class="flex items-center justify-center gap-2 mt-3" id="sd"></div>
     </div>
 </section>
 
-<!-- CTA -->
 <section class="relative py-18 z-10">
     <div class="max-w-4xl mx-auto px-4 text-center">
         <div class="inline-block glass px-4 py-2 rounded-full mb-4"><span class="text-gold text-xs tracking-[.3em] font-display">BEREIT?</span></div>
-        <h2 class="font-display font-black text-4xl md:text-6xl mb-5">TIME TO <span class="g-t">ELEVATE</span></h2>
+        <h2 class="font-display font-black text-4xl md:text-6xl mb-5">Time to <span class="g-t">Elevate</span></h2>
         <p class="text-xl text-gray-500 mb-8 max-w-lg mx-auto">250 Trader warten auf dich. Werde Teil der Elite.</p>
-        <a href="https://t.me/GoldbankManager" target="_blank" class="g-btn text-bank-900 font-display font-black text-xl px-12 py-5 rounded-2xl transition-all duration-300 hover:scale-105 relative z-10">
-            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            KOSTENLOS STARTEN
-        </a>
-        <p class="text-gray-600 text-sm mt-3">Keine Kreditkarte. Keine Kosten. Forever free.</p>
+        <a href="https://t.me/GoldbankManager" target="_blank" class="g-btn g-btn-xl">&#x2714; Kostenlos starten</a>
+        <p class="text-gray-600 text-sm mt-4">Keine Kreditkarte. Keine Kosten. Dauerhaft kostenlos.</p>
     </div>
 </section>
 
-<!-- FAQ -->
 <section id="faq" class="relative py-14 z-10">
     <div class="max-w-3xl mx-auto px-4">
         <div class="text-center mb-8">
             <div class="inline-block glass px-4 py-2 rounded-full mb-4"><span class="text-gold text-xs tracking-[.3em] font-display">FAQ</span></div>
-            <h2 class="font-display font-bold text-3xl">FRAGEN <span class="g-t">& ANTWORTEN</span></h2>
+            <h2 class="font-display font-bold text-3xl">Fragen <span class="g-t">&amp; Antworten</span></h2>
         </div>
         <div class="space-y-2">
-            <div class="card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Ist GoldBank wirklich kostenlos?</h3><p class="text-gray-400 text-sm">Ja. 100% kostenlos. Forever.</p></div>
-            <div class="card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Für wen ist GoldBank?</h3><p class="text-gray-400 text-sm">Anfänger bis Profis. Community supported.</p></div>
-            <div class="card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Wie erhalte ich Zugang?</h3><p class="text-gray-400 text-sm">Klick auf "Jetzt beitreten" → direkt zu Telegram.</p></div>
+            <div class="card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Ist GoldBank wirklich kostenlos?</h3><p class="text-gray-400 text-sm">Ja. 100% kostenlos. Kein Premium-Tier, keine versteckten Kosten. Dauerhaft.</p></div>
+            <div class="card p-5 rounded-2xl"><h3 class="font-semibold mb-1">F&uuml;r wen ist GoldBank geeignet?</h3><p class="text-gray-400 text-sm">F&uuml;r jeden, der ernsthaft traden will. Vom Anf&auml;nger bis zum Profi &ndash; unsere Signale sind erkl&auml;rt, die Community unterst&uuml;tzt.</p></div>
+            <div class="card p-5 rounded-2xl"><h3 class="font-semibold mb-1">Wie erhalte ich Zugang?</h3><p class="text-gray-400 text-sm">Klick auf &quot;Jetzt beitreten&quot; &ndash; du wirst direkt zu Telegram weitergeleitet. Sofortiger Zugang.</p></div>
         </div>
     </div>
 </section>
 
-<!-- Footer -->
 <footer class="relative border-t border-g/06 py-8 z-10">
     <div class="max-w-7xl mx-auto px-4 text-center">
         <div class="flex items-center justify-center gap-2 mb-2"><div class="w-6 h-6 rounded-lg bg-gradient-to-br from-gd via-g to-gb flex items-center justify-center"><svg class="w-4 h-4 text-bank-900" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><span class="font-display font-bold text-sm">GOLD<span class="text-gold">BANK</span></span></div>
         <a href="https://t.me/GoldbankManager" target="_blank" class="text-gray-500 hover:text-gold text-sm">t.me/GoldbankManager</a>
-        <p class="text-gray-600 text-xs mt-2">© 2026 GoldBank Trading.</p>
-        <p class="text-gray-700 text-[10px] mt-2 max-w-lg mx-auto">Trading birgt erhebliche Verlustrisiken. Keine Anlageberatung.</p>
+        <p class="text-gray-600 text-xs mt-2">&copy; 2026 GoldBank Trading. Alle Rechte vorbehalten.</p>
+        <p class="text-gray-700 text-[10px] mt-2 max-w-lg mx-auto leading-relaxed">Trading birgt erhebliche Verlustrisiken. Nur mit Kapital handeln, dessen Verlust du verkraften kannst. Keine Anlageberatung. Ergebnisse aus der Vergangenheit garantieren keine zuk&uuml;nftigen Gewinne.</p>
     </div>
 </footer>
 
 <script>
-const isMob=innerWidth<768;
-
-// Typewriter
-const texts=['Elite-Community mit präzisen Signalen.','250+ Trader. Dein Edge im Markt.','Keine Gurus. Nur echte Results.'];
-let ti=0,ci=0,del=!1;const tw=document.getElementById('tw');
-(function t(){const c=texts[ti];tw.textContent=c.substring(0,del?--ci:++ci);if(!del&&ci===c.length)setTimeout(()=>del=!0,1800);else if(del&&ci===0){del=!1;ti=(ti+1)%texts.length}setTimeout(t,del?25:55)})();
-
-// FOMO / Online
-setInterval(()=>{document.getElementById('fc').textContent=Math.floor(Math.random()*10)+19},18000);
-setInterval(()=>{document.getElementById('oc').textContent=Math.floor(Math.random()*45)+215},30000);
-
-// Notifications
-const names=['Max','Leon','Luca','David','Felix','Jonas','Tim','Niklas','Tom','Paul'];
-function sn(){const n=names[Math.floor(Math.random()*names.length)],d=document.createElement('div');d.className='notif glass rounded-xl px-3 py-2 text-sm flex items-center gap-2';d.innerHTML='<span class="text-green-400">✓</span><span class="text-white font-semibold">'+n+'</span><span class="text-gray-400">ist beigetreten</span>';document.getElementById('na').appendChild(d);setTimeout(()=>d.remove(),3400)}
-setInterval(()=>{if(Math.random()>.5)sn()},8000);setTimeout(sn,3000);
-
-// Slider
-const st=document.getElementById('st'),sls=st.children,sd=document.getElementById('sd');
-let cs=0,ap;
-[...sls].forEach((_,i)=>{const d=document.createElement('button');d.style.cssText=`width:8px;height:8px;border-radius:50%;background:rgba(212,175,55,${i===0?.5:.12});border:none;cursor:pointer;transition:all .25s`;d.onclick=()=>gs(i);sd.appendChild(d)});
-const ds=sd.children;
-function up(){st.style.transform=`translateX(-${cs*100}%)`;[...ds].forEach((d,i)=>d.style.background=`rgba(212,175,55,${i===cs?.5:.12})`)}
+var isMob=innerWidth<768;
+var texts=['Elite-Community mit pr\u00e4zisen Signalen und KI-gest\u00fctzter Analyse.','250+ Trader. Eine Brotherhood. Dein Edge im Markt.','Keine Gurus. Nur echte Trader mit echten Results.'];
+var ti=0,ci=0,del=!1,tw=document.getElementById('tw');
+(function t(){var c=texts[ti];tw.textContent=c.substring(0,del?--ci:++ci);if(!del&&ci===c.length)setTimeout(function(){del=!0},1800);else if(del&&ci===0){del=!1;ti=(ti+1)%texts.length}setTimeout(t,del?25:55)})();
+setInterval(function(){document.getElementById('fc').textContent=Math.floor(Math.random()*10)+19},18000);
+setInterval(function(){document.getElementById('oc').textContent=Math.floor(Math.random()*45)+215},30000);
+var names=['Max','Leon','Luca','David','Felix','Jonas','Tim','Niklas','Tom','Paul'];
+function sn(){var n=names[Math.floor(Math.random()*names.length)],d=document.createElement('div');d.className='notif glass rounded-xl px-3 py-2 text-sm flex items-center gap-2';d.innerHTML='<span class="text-green-400">&#x2713;</span><span class="text-white font-semibold">'+n+'</span><span class="text-gray-400">ist beigetreten</span>';document.getElementById('na').appendChild(d);setTimeout(function(){d.remove()},3400)}
+setInterval(function(){if(Math.random()>.5)sn()},8000);setTimeout(sn,3000);
+var st=document.getElementById('st'),sls=st.children,sd=document.getElementById('sd'),cs=0,ap;
+for(var i=0;i<sls.length;i++){(function(idx){var d=document.createElement('button');d.style.cssText='width:10px;height:10px;border-radius:50%;background:rgba(212,175,55,'+(idx===0?.6:.15)+');border:none;cursor:pointer;transition:all .3s';d.onclick=function(){gs(idx)};sd.appendChild(d)})(i)}
+var ds=sd.children;
+function up(){st.style.transform='translateX(-'+cs*100+'%)';for(var i=0;i<ds.length;i++)ds[i].style.background='rgba(212,175,55,'+(i===cs?.6:.15)+')'}
 function ns(){cs=(cs+1)%sls.length;up();rst()}
 function ps(){cs=(cs-1+sls.length)%sls.length;up();rst()}
 function gs(i){cs=i;up();rst()}
 function rst(){clearInterval(ap);ap=setInterval(ns,4000)}
 ap=setInterval(ns,4000);
-let ts=0;document.getElementById('slider').addEventListener('touchstart',e=>{ts=e.changedTouches[0].screenX});document.getElementById('slider').addEventListener('touchend',e=>{const d=ts-e.changedTouches[0].screenX;if(d>40)ns();if(d<-40)ps()});
+var ts=0;document.getElementById('slider').addEventListener('touchstart',function(e){ts=e.changedTouches[0].screenX});document.getElementById('slider').addEventListener('touchend',function(e){var d=ts-e.changedTouches[0].screenX;if(d>40)ns();if(d<-40)ps()});
 </script>
 </body>
 </html>
