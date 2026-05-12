@@ -3,44 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AmoFX Trading | Smart Trading Community</title>
+    <title>GoldBank Trading | Elite Trading Community</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
+                        display: ['Orbitron', 'monospace'],
                     },
                     colors: {
                         gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
+                            DEFAULT: '#D4AF37',
+                            bright: '#FFD700',
+                            dark: '#B8960C',
+                            light: '#F5D76E',
                         },
-                        dark: {
-                            900: '#0a0a0f',
-                            800: '#12121a',
-                            700: '#1a1a25',
-                        }
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 20px rgba(251, 191, 36, 0.3)' },
-                            '100%': { boxShadow: '0 0 40px rgba(251, 191, 36, 0.6)' },
+                        bank: {
+                            900: '#0A0A0F',
+                            800: '#0D0D18',
+                            700: '#111128',
+                            600: '#1A1A35',
                         }
                     }
                 }
@@ -48,244 +36,497 @@
         }
     </script>
     <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-bright: #FFD700;
+            --gold-dark: #B8960C;
+            --bg: #0A0A0F;
+        }
+        
+        * { scroll-behavior: smooth; }
+        
+        body {
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
         .glass {
-            background: rgba(26, 26, 37, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(17, 17, 40, 0.6);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
         }
+        
         .glass-card {
-            background: linear-gradient(135deg, rgba(26, 26, 37, 0.9) 0%, rgba(18, 18, 26, 0.9) 100%);
-            border: 1px solid rgba(251, 191, 36, 0.1);
+            background: linear-gradient(135deg, rgba(17, 17, 40, 0.85) 0%, rgba(13, 13, 24, 0.85) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+        
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+        }
+        
+        .gold-text {
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 30%, #FFD700 50%, #B8960C 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: goldShimmer 3s ease-in-out infinite;
         }
-        .grid-pattern {
+        
+        @keyframes goldShimmer {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 200% 200%; }
+        }
+        
+        .glow-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #D4AF37 100%);
+            background-size: 200% 200%;
+            animation: goldShimmer 3s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .glow-btn:hover {
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        .grid-bg {
             background-image: 
-                linear-gradient(rgba(251, 191, 36, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(251, 191, 36, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+            background-size: 80px 80px;
+            background-position: center center;
+        }
+        
+        .chart-bg {
+            position: absolute;
+            opacity: 0.04;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(212,175,55,0.1) 2px, rgba(212,175,55,0.1) 3px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(212,175,55,0.1) 2px, rgba(212,175,55,0.1) 3px);
+        }
+        
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum";
+        }
+        
+        /* 3D Card Hover Effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .card-3d-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-3d:hover .card-3d-inner {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        .pulse-ring {
+            animation: pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulseRing {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); }
+            70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .float-delayed {
+            animation: float 6s ease-in-out 2s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(1deg); }
+            75% { transform: translateY(5px) rotate(-1deg); }
         }
     </style>
 </head>
-<body class="bg-dark-900 text-white font-sans overflow-x-hidden">
+<body class="text-white overflow-x-hidden relative">
+    
+    <canvas id="three-canvas"></canvas>
+    
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-dark-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                        </svg>
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gold-dark via-gold to-gold-bright flex items-center justify-center transform -rotate-12 shadow-lg shadow-gold/20">
+                            <svg class="w-7 h-7 text-bank-900 rotate-12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
                     </div>
-                    <span class="font-display font-bold text-2xl tracking-tight">
-                        Amo<span class="text-gold-500">FX</span>
-                    </span>
+                    <div class="flex flex-col">
+                        <span class="font-display font-bold text-2xl tracking-wider">
+                            GOLD<span class="text-gold">BANK</span>
+                        </span>
+                        <span class="text-[10px] text-gold tracking-[0.3em] -mt-1">TRADING</span>
+                    </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a>
-                    <a href="#community" class="text-gray-300 hover:text-white transition-colors">Community</a>
-                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors">FAQ</a>
+                    <a href="#vision" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">VISION</a>
+                    <a href="#features" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">FEATURES</a>
+                    <a href="#testimonials" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">REPUTATION</a>
+                    <a href="#faq" class="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">FAQ</a>
                 </div>
-                <a href="https://t.me/+ahfjzBsFOPMxNGFi" target="_blank" 
-                   class="bg-gradient-to-r from-gold-500 to-gold-600 text-dark-900 font-semibold px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-gold-500/30 transition-all duration-300 transform hover:scale-105">
-                    Jetzt Beitreten
+                <a href="https://t.me/GoldbankManager" target="_blank" 
+                   class="glow-btn text-bank-900 font-display font-bold text-sm px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 pulse-ring">
+                    JOIN
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 grid-pattern">
-        <div class="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 opacity-90"></div>
+    <section id="vision" class="relative min-h-screen flex items-center justify-center pt-20 grid-bg">
+        <div class="absolute inset-0 chart-bg"></div>
         
-        <!-- Floating Elements -->
-        <div class="absolute top-1/4 left-10 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl animate-float"></div>
-        <div class="absolute bottom-1/4 right-10 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
+        <!-- Floating 3D Decorations (CSS) -->
+        <div class="absolute top-1/4 left-[10%] w-40 h-40 bg-gradient-to-br from-gold/10 to-transparent rounded-full blur-3xl float-anim"></div>
+        <div class="absolute bottom-1/4 right-[10%] w-60 h-60 bg-gradient-to-tl from-gold/8 to-transparent rounded-full blur-3xl float-delayed"></div>
+        <div class="absolute top-1/2 right-[25%] w-20 h-20 bg-gold/15 rounded-full blur-2xl float-anim" style="animation-delay: 4s;"></div>
         
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full mb-8">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-sm text-gray-300">Live Trading Community</span>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <div class="inline-flex items-center space-x-3 glass px-5 py-3 rounded-full mb-10">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span class="text-sm text-gray-300 tracking-wider">250 AKTIVE TRADER LIVE</span>
             </div>
             
-            <h1 class="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-tight mb-6">
-                Smart Trading<br>
-                <span class="gradient-text">Mit System</span>
+            <h1 class="font-display font-black text-5xl md:text-7xl lg:text-[90px] leading-none mb-8 tracking-tight">
+                DIE ZUKUNFT<br>
+                <span class="gold-text">DES TRADINGS</span>
             </h1>
             
-            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
-                Tritt Deutschlands aufstrebendster Trading-Community bei. <br class="hidden md:block">
-                Professionelle Signale, bildungsorientierter Austausch & echte Trader.
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+                Elite-Community mit präzisen Signalen, KI-gestützter Analyse und einer Brotherhood
+                von 250 aktiven Tradern. Dein Edge im Markt beginnt hier.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                <a href="https://t.me/+ahfjzBsFOPMxNGFi" target="_blank"
-                   class="group relative bg-gradient-to-r from-gold-500 to-gold-600 text-dark-900 font-bold text-lg px-8 py-4 rounded-2xl hover:shadow-2xl hover:shadow-gold-500/40 transition-all duration-300 transform hover:scale-105 animate-glow">
-                    <span class="flex items-center space-x-2">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <span>Kostenlos beitreten</span>
-                    </span>
-                </a>
-                <a href="#features" class="glass text-white font-semibold px-8 py-4 rounded-2xl hover:bg-white/10 transition-all duration-300">
-                    Mehr erfahren
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20">
+                <a href="https://t.me/GoldbankManager" target="_blank"
+                   class="glow-btn text-bank-900 font-display font-bold text-lg px-10 py-5 rounded-2xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-3">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span>JETZT BEITRETEN</span>
                 </a>
             </div>
             
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-3xl font-display font-bold text-gold-500">500+</div>
-                    <div class="text-gray-400 text-sm">Mitglieder</div>
+            <!-- Live Stats Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text stat-number">250+</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">AKTIVE TRADER</div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-3xl font-display font-bold text-gold-500">24/7</div>
-                    <div class="text-gray-400 text-sm">Live Support</div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text">85%</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">WIN-RATE</div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-3xl font-display font-bold text-gold-500">100%</div>
-                    <div class="text-gray-400 text-sm">Kostenlos</div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text">24/7</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">SUPPORT</div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-3xl font-display font-bold text-gold-500">#1</div>
-                    <div class="text-gray-400 text-sm">Community</div>
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="font-display font-black text-4xl gold-text">#1</div>
+                    <div class="text-gray-400 text-xs mt-2 tracking-wider">COMMUNITY</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">
-                    Was dich <span class="gradient-text">erwartet</span>
+    <section id="features" class="relative py-32">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-bank-800/50 to-bank-900"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            
+            <div class="text-center mb-20">
+                <div class="inline-block glass px-4 py-2 rounded-full mb-6">
+                    <span class="text-gold text-xs tracking-[0.3em] font-display">DAS BIETEN WIR</span>
+                </div>
+                <h2 class="font-display font-bold text-5xl md:text-6xl mb-4">
+                    DIE <span class="gold-text">EDGE</span>
                 </h2>
-                <p class="text-gray-400 text-xl max-w-2xl mx-auto">
-                    Wir bieten mehr als nur Signale. Wir bilden eine starke Community von Tradern, die zusammen wachsen.
+                <p class="text-gray-500 text-lg max-w-xl mx-auto">
+                    Unsere drei Säulen für deinen Trading-Erfolg.
                 </p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="glass-card p-8 rounded-3xl group hover:border-gold-500/30 transition-all duration-300">
-                    <div class="w-14 h-14 bg-gradient-to-br from-gold-500/20 to-gold-600/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-7 h-7 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+                
+                <!-- Card 1 -->
+                <div class="glass-card rounded-3xl p-8 card-3d">
+                    <div class="card-3d-inner">
+                        <div class="w-16 h-16 bg-gradient-to-br from-gold-dark/30 to-gold/20 rounded-2xl flex items-center justify-center mb-8 border border-gold/10">
+                            <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-display font-bold text-2xl mb-4 tracking-tight">PRÄZISE <span class="text-gold">SIGNALE</span></h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">
+                            Entry, SL & TP klar definiert. Kein Ratespiel. Jedes Setup mit Analyse. 
+                            KI-gestützte Scanner liefern nur das, was wirklich zählt.
+                        </p>
                     </div>
-                    <h3 class="font-display font-bold text-xl mb-3">Trading Signale</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Erhalte hochwertige Setups mit Entry, Stop-Loss und Take-Profit. Transparent und nachvollziehbar.
-                    </p>
                 </div>
                 
-                <!-- Feature 2 -->
-                <div class="glass-card p-8 rounded-3xl group hover:border-gold-500/30 transition-all duration-300">
-                    <div class="w-14 h-14 bg-gradient-to-br from-gold-500/20 to-gold-600/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-7 h-7 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                        </svg>
+                <!-- Card 2 -->
+                <div class="glass-card rounded-3xl p-8 card-3d">
+                    <div class="card-3d-inner">
+                        <div class="w-16 h-16 bg-gradient-to-br from-gold-dark/30 to-gold/20 rounded-2xl flex items-center justify-center mb-8 border border-gold/10">
+                            <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-display font-bold text-2xl mb-4 tracking-tight">LIVE <span class="text-gold">CHARTS</span></h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">
+                            Echtzeit-Chartanalysen direkt im Stream. Verstehe, WARUM ein Trade funktioniert.
+                            Kein Blind-Follow, sondern echtes Trading-Wissen.
+                        </p>
                     </div>
-                    <h3 class="font-display font-bold text-xl mb-3">Education First</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Lerne verstehen, warum ein Trade funktioniert. Wir erklären Strategien, nicht nur Ergebnisse.
-                    </p>
                 </div>
                 
-                <!-- Feature 3 -->
-                <div class="glass-card p-8 rounded-3xl group hover:border-gold-500/30 transition-all duration-300">
-                    <div class="w-14 h-14 bg-gradient-to-br from-gold-500/20 to-gold-600/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-7 h-7 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
+                <!-- Card 3 -->
+                <div class="glass-card rounded-3xl p-8 card-3d">
+                    <div class="card-3d-inner">
+                        <div class="w-16 h-16 bg-gradient-to-br from-gold-dark/30 to-gold/20 rounded-2xl flex items-center justify-center mb-8 border border-gold/10">
+                            <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-display font-bold text-2xl mb-4 tracking-tight">ELITE <span class="text-gold">CIRCLE</span></h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">
+                            250 aktive Trader. Eine Brotherhood. Täglicher Austausch auf Augenhöhe.
+                            Keine Gurus, nur echte Trader die gemeinsam wachsen.
+                        </p>
                     </div>
-                    <h3 class="font-display font-bold text-xl mb-3">Starke Community</h3>
-                    <p class="text-gray-400 leading-relaxed">
-                        Tausche dich mit Gleichgesinnten aus. Keine Gurus, nur Trader, die sich gegenseitig unterstützen.
-                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-gold-500/10 via-transparent to-gold-500/10"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
-            <h2 class="font-display font-bold text-4xl md:text-5xl mb-6">
-                Bereit für den <span class="gradient-text">nächsten Schritt</span>?
+    <!-- Stats + CTA Section -->
+    <section class="relative py-32 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-gold/5 via-transparent to-gold/5"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            
+            <div class="inline-block glass px-4 py-2 rounded-full mb-8">
+                <span class="text-gold text-xs tracking-[0.3em] font-display">JETZT STARTEN</span>
+            </div>
+            
+            <h2 class="font-display font-black text-4xl md:text-6xl mb-6">
+                READY TO <span class="gold-text">LEVEL UP</span>?
             </h2>
-            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                Tritt jetzt der Community bei und erhalte sofortigen Zugriff auf unsere Trading-Signale und den Austausch mit über 500 Mitgliedern.
+            <p class="text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Werde Teil der GoldBank Community. 250 Trader sind bereits an Bord.
+                Kostenloser Zugang, sofortiger Start.
             </p>
-            <a href="https://t.me/+ahfjzBsFOPMxNGFi" target="_blank"
-               class="inline-flex items-center space-x-3 bg-gradient-to-r from-gold-500 to-gold-600 text-dark-900 font-bold text-xl px-10 py-5 rounded-2xl hover:shadow-2xl hover:shadow-gold-500/50 transition-all duration-300 transform hover:scale-105">
-                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-                <span>Jetzt kostenlos beitreten</span>
-            </a>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="https://t.me/GoldbankManager" target="_blank"
+                   class="glow-btn text-bank-900 font-display font-black text-xl px-12 py-6 rounded-2xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-4">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span>KOSTENLOS BEITRETEN</span>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-24">
+    <section id="faq" class="relative py-32">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="font-display font-bold text-4xl text-center mb-16">
-                Häufige <span class="gradient-text">Fragen</span>
-            </h2>
+            <div class="text-center mb-16">
+                <div class="inline-block glass px-4 py-2 rounded-full mb-6">
+                    <span class="text-gold text-xs tracking-[0.3em] font-display">FAQ</span>
+                </div>
+                <h2 class="font-display font-bold text-5xl mb-4">
+                    FRAGEN <span class="gold-text">& ANTWORTEN</span>
+                </h2>
+            </div>
             
             <div class="space-y-4">
                 <div class="glass-card p-6 rounded-2xl">
-                    <h3 class="font-semibold text-lg mb-2">Ist die Teilnahme wirklich kostenlos?</h3>
-                    <p class="text-gray-400">Ja, die Mitgliedschaft in unserer Telegram-Community ist und bleibt 100% kostenlos. Keine versteckten Kosten.</p>
+                    <h3 class="font-semibold text-lg mb-2">Ist die GoldBank Community wirklich kostenlos?</h3>
+                    <p class="text-gray-400">Ja. 100% kostenlos. Kein Premium-Tier, keine versteckten Kosten. Wir wachsen gemeinsam.</p>
                 </div>
-                
                 <div class="glass-card p-6 rounded-2xl">
-                    <h3 class="font-semibold text-lg mb-2">Für welche Erfahrungsstufen ist die Community geeignet?</h3>
-                    <p class="text-gray-400">Von Anfängern bis erfahrenen Tradern - wir haben für jeden etwas. Unsere Signale sind verständlich erklärt.</p>
+                    <h3 class="font-semibold text-lg mb-2">Für wen ist GoldBank geeignet?</h3>
+                    <p class="text-gray-400">Für jeden, der ernsthaft traden will. Vom Anfänger bis zum Profi. Unsere Signale sind erklärt, unsere Analysen nachvollziehbar.</p>
                 </div>
-                
                 <div class="glass-card p-6 rounded-2xl">
-                    <h3 class="font-semibold text-lg mb-2">Wie oft werden Signale gepostet?</h3>
-                    <p class="text-gray-400">Wir posten nur hochwertige Setups, keine Masse. Qualität vor Quantität ist unser Motto.</p>
+                    <h3 class="font-semibold text-lg mb-2">Wie läuft die Kommunikation ab?</h3>
+                    <p class="text-gray-400">Alles läuft über Telegram. Signal-Gruppe für Setups, Diskussions-Chat für Austausch. Direkt und Echtzeit.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 py-12">
+    <footer class="relative border-t border-gold/10 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="flex items-center space-x-2 mb-4 md:mb-0">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-dark-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-dark via-gold to-gold-bright flex items-center justify-center">
+                        <svg class="w-6 h-6 text-bank-900" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                         </svg>
                     </div>
-                    <span class="font-display font-bold text-xl">Amo<span class="text-gold-500">FX</span></span>
+                    <span class="font-display font-bold text-xl">GOLD<span class="text-gold">BANK</span></span>
                 </div>
-                <div class="text-gray-500 text-sm">
-                    © 2026 AmoFX Trading. Alle Rechte vorbehalten.
-                </div>
-                <div class="flex items-center space-x-6 mt-4 md:mt-0">
-                    <a href="https://t.me/+ahfjzBsFOPMxNGFi" target="_blank" class="text-gray-400 hover:text-gold-500 transition-colors">
-                        Telegram
-                    </a>
-                </div>
+                <a href="https://t.me/GoldbankManager" target="_blank" class="text-gray-500 hover:text-gold transition-colors text-sm">
+                    t.me/GoldbankManager
+                </a>
             </div>
-            <div class="mt-8 text-center text-gray-600 text-xs">
-                Trading birgt erhebliche Risiken. Nur mit Geld handeln, dessen Verlust du verkraften kannst.
+            <div class="text-center">
+                <p class="text-gray-600 text-xs">© 2026 GoldBank Trading. Alle Rechte vorbehalten.</p>
+                <p class="text-gray-700 text-[11px] mt-3 max-w-lg mx-auto leading-relaxed">
+                    Trading birgt erhebliche Verlustrisiken. Nur mit Kapital handeln, dessen Verlust du verkraften kannst. 
+                    Keine Anlageberatung. Ergebnisse aus der Vergangenheit garantieren keine zukünftigen Gewinne.
+                </p>
             </div>
         </div>
     </footer>
+
+    <!-- Three.js Background -->
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio * 0.6);
+        camera.position.z = 30;
+
+        // Gold particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 500;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i += 3) {
+            posArray[i] = (Math.random() - 0.5) * 60;
+            posArray[i + 1] = (Math.random() - 0.5) * 40;
+            posArray[i + 2] = (Math.random() - 0.5) * 30;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.08,
+            color: 0xD4AF37,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.6,
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // Floating geometric shapes
+        const geoGroup = new THREE.Group();
+        
+        const shapes = [
+            new THREE.IcosahedronGeometry(0.6, 0),
+            new THREE.OctahedronGeometry(0.5),
+            new THREE.TetrahedronGeometry(0.45),
+            new THREE.DodecahedronGeometry(0.4, 0),
+        ];
+
+        for (let i = 0; i < 8; i++) {
+            const geo = shapes[i % shapes.length];
+            const mat = new THREE.MeshBasicMaterial({
+                color: 0xD4AF37,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.15,
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.set(
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 35,
+                -10 - Math.random() * 15
+            );
+            mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+            mesh.userData = {
+                speed: 0.2 + Math.random() * 0.8,
+                rotSpeed: 0.001 + Math.random() * 0.005,
+                amplitude: 0.5 + Math.random() * 2,
+                phase: Math.random() * Math.PI * 2,
+            };
+            geoGroup.add(mesh);
+        }
+        
+        scene.add(geoGroup);
+
+        let mouseX = 0, mouseY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        let clock = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            clock += 0.005;
+
+            particlesMesh.rotation.x += 0.0002;
+            particlesMesh.rotation.y += 0.0003;
+
+            geoGroup.children.forEach(child => {
+                child.rotation.x += child.userData.rotSpeed;
+                child.rotation.y += child.userData.rotSpeed * 0.7;
+                child.position.y += Math.sin(clock * child.userData.speed + child.userData.phase) * 0.02;
+            });
+
+            // Mouse parallax
+            geoGroup.rotation.x += (mouseY * 0.02 - geoGroup.rotation.x) * 0.02;
+            geoGroup.rotation.y += (mouseX * 0.02 - geoGroup.rotation.y) * 0.02;
+            particlesMesh.rotation.y += mouseX * 0.0005;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
