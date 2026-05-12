@@ -167,8 +167,8 @@ let ti=0,ci=0,del=!1;const tw=document.getElementById('tw');
 (function t(){const c=texts[ti];tw.textContent=c.substring(0,del?--ci:++ci);if(!del&&ci===c.length)setTimeout(()=>del=!0,1800);else if(del&&ci===0){del=!1;ti=(ti+1)%texts.length}setTimeout(t,del?25:55)})();
 
 // FOMO / Online
-setInterval(()=>{document.getElementById('fc').textContent=Math.floor(Math.random()*10)+19},7000);
-setInterval(()=>{document.getElementById('oc').textContent=Math.floor(Math.random()*45)+215},14000);
+setInterval(()=>{document.getElementById('fc').textContent=Math.floor(Math.random()*10)+19},18000);
+setInterval(()=>{document.getElementById('oc').textContent=Math.floor(Math.random()*45)+215},30000);
 
 // Notifications
 const names=['Max','Leon','Luca','David','Felix','Jonas','Tim','Niklas','Tom','Paul'];
