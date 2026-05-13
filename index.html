@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GoldBank &mdash; Dein Move</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 
 :root{--g:#C8A84E;--gb:#E8C95D;--gd:#A8882E;--bg:#060403;--b2:#030201;--m:rgba(245,236,215,.42);--d:rgba(245,236,215,.15)}
@@ -35,7 +35,7 @@ main{position:relative;z-index:1}
 .hero{display:flex;flex-direction:column;justify-content:center;min-height:100vh;text-align:left;max-width:1000px;margin:0 auto;opacity:0;animation:rise .9s ease .2s forwards}
 @keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 .hero .label{font-family:"DM Mono",monospace;font-size:clamp(11px,1.5vw,13px);letter-spacing:6px;color:var(--g);text-transform:uppercase}
-.hero h1{font-family:"Playfair Display",serif;font-size:clamp(56px,10vw,140px);font-weight:900;line-height:.85;letter-spacing:-4px;margin:12px 0}
+.hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(56px,10vw,140px);font-weight:900;line-height:.85;letter-spacing:-4px;margin:12px 0}
 .hero h1 .strike{-webkit-text-stroke:2.5px var(--gb);-webkit-text-fill-color:transparent;transition:all .8s}
 .hero h1 .strike:hover{-webkit-text-fill-color:var(--g);color:var(--g);text-shadow:0 0 100px rgba(200,168,78,.5)}
 .hero h1 .gold{color:var(--gb);font-style:italic;transition:all .4s;display:inline-block}
@@ -58,7 +58,7 @@ main{position:relative;z-index:1}
 /* === LIVE STRIP === */
 .live-strip{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:28px 24px}
 .live-strip span{padding:10px 22px;border:1px solid rgba(200,168,78,.1);border-radius:30px;font-size:12px;color:var(--m);background:rgba(0,0,0,.3);display:flex;align-items:center;gap:8px}
-.live-strip span b{color:var(--gb);font-family:"Playfair Display",serif;font-size:16px}
+.live-strip span b{color:var(--gb);font-family:"Cormorant Garamond",serif;font-size:16px}
 
 /* === NARRATIVE BLOCKS: Alternating Layout === */
 .narrative{padding:clamp(30px,6vh,70px) clamp(20px,5vw,60px);max-width:1000px;margin:0 auto}
@@ -70,14 +70,14 @@ main{position:relative;z-index:1}
 .nar-icon{font-size:clamp(60px,8vw,90px);position:relative;z-index:2;transition:transform .5s}
 .nar-block:hover .nar-icon{transform:scale(1.15) rotate(-5deg)}
 .nar-block .nar-text .nar-num{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:4px;color:var(--gb);text-transform:uppercase;margin-bottom:8px}
-.nar-block .nar-text h3{font-family:"Playfair Display",serif;font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-1px;margin-bottom:14px}
+.nar-block .nar-text h3{font-family:"Cormorant Garamond",serif;font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-1px;margin-bottom:14px}
 .nar-block .nar-text h3 em{color:var(--gb);font-style:italic}
 .nar-block .nar-text p{font-size:15px;color:var(--m);line-height:1.9;max-width:420px}
 
 /* === STAT BLOCK: 2 huge numbers side by side === */
 .big-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:900px;margin:0 auto;text-align:center}
 .big-stat{display:flex;flex-direction:column;align-items:center;gap:8px;padding:40px 20px;position:relative}
-.big-stat .bs-num{font-family:"Playfair Display",serif;font-size:clamp(64px,10vw,130px);font-weight:900;line-height:.8;color:transparent;-webkit-text-stroke:2px var(--gb);transition:all .6s}
+.big-stat .bs-num{font-family:"Cormorant Garamond",serif;font-size:clamp(64px,10vw,130px);font-weight:900;line-height:.8;color:transparent;-webkit-text-stroke:2px var(--gb);transition:all .6s}
 .big-stat:hover .bs-num{-webkit-text-fill-color:var(--g);color:var(--g);text-shadow:0 0 70px rgba(200,168,78,.4)}
 .big-stat .bs-lbl{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:3px;color:var(--g);text-transform:uppercase}
 .big-stat .bs-sub{font-size:13px;color:var(--d);max-width:250px;line-height:1.6}
@@ -86,7 +86,7 @@ main{position:relative;z-index:1}
 .showcase{padding:clamp(30px,6vh,60px) 0}
 .showcase .sc-top{text-align:center;max-width:600px;margin:0 auto 36px;padding:0 20px}
 .showcase .sc-top .sc-tag{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:4px;color:var(--g);text-transform:uppercase;margin-bottom:8px}
-.showcase .sc-top h2{font-family:"Playfair Display",serif;font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1px}
+.showcase .sc-top h2{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1px}
 .showcase .sc-top h2 em{color:var(--gb);font-style:italic}
 .rail{display:flex;gap:20px;padding:0 16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:grab;user-select:none}
 .rail::-webkit-scrollbar{display:none}.rail:active{cursor:grabbing}
@@ -97,7 +97,7 @@ main{position:relative;z-index:1}
 /* === CTA FOOTER === */
 .cta-foot{text-align:center;max-width:600px;margin:0 auto;padding:clamp(40px,8vh,80px) 24px}
 .cta-foot .cf-tag{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:4px;color:var(--g);text-transform:uppercase;margin-bottom:12px}
-.cta-foot h2{font-family:"Playfair Display",serif;font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:28px}
+.cta-foot h2{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:28px}
 .cta-foot h2 em{color:var(--gb);font-style:italic}
 .cta-foot .cf-sub{color:var(--d);font-size:13px;margin-top:14px}
 
@@ -112,7 +112,7 @@ main{position:relative;z-index:1}
 
 /* === FOOTER === */
 footer{text-align:center;padding:32px 24px;border-top:1px solid rgba(200,168,78,.06)}
-footer .fl{font-family:"Playfair Display",serif;font-size:18px;font-weight:900;letter-spacing:4px;margin-bottom:4px}
+footer .fl{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:900;letter-spacing:4px;margin-bottom:4px}
 footer .fl em{color:var(--gb);font-style:italic}
 footer a{color:var(--d);text-decoration:none;font-size:13px;transition:color .3s}
 footer a:hover{color:var(--gb)}
