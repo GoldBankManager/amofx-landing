@@ -601,6 +601,161 @@ footer .disc {
   to { opacity: 0; transform: translateY(-10px); }
 }
 
+
+/* ============================================
+   THE RESERVE — Editorial Stat Block
+   ============================================ */
+.reserve {
+  position: relative;
+  z-index: 2;
+  padding: 80px 24px;
+  overflow: hidden;
+}
+
+.reserve-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.reserve-bg-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,168,78,.1), transparent);
+  width: 100%;
+}
+
+.reserve-bg-line:nth-child(1) { top: 15%; }
+.reserve-bg-line:nth-child(2) { top: 50%; }
+.reserve-bg-line:nth-child(3) { top: 85%; }
+
+.reserve-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.reserve-item {
+  padding: 40px 20px;
+  position: relative;
+}
+
+.reserve-item:nth-child(odd) { text-align: right; padding-right: 60px; border-right: 1px solid rgba(200,168,78,.08); }
+.reserve-item:nth-child(even) { padding-left: 60px; }
+
+.reserve-item .r-num {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(56px, 8vw, 100px);
+  font-weight: 900;
+  line-height: .85;
+  letter-spacing: -3px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--gold2);
+  transition: all .5s;
+}
+
+.reserve-item:hover .r-num {
+  -webkit-text-stroke-color: var(--gold2);
+  color: var(--gold);
+  -webkit-text-fill-color: var(--gold);
+  text-shadow: 0 0 60px rgba(200,168,78,.3);
+}
+
+.reserve-item .r-ctx {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.reserve-item .r-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.25);
+  margin-top: 4px;
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+.reserve-item:nth-child(odd) .r-sub { margin-left: auto; }
+
+.reserve-orb {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  transition: all 1.5s;
+  opacity: .06;
+}
+
+.reserve-orb.gold { background: var(--gold2); top: 10%; left: 30%; }
+.reserve-orb.amber { background: var(--gold3); bottom: 20%; right: 20%; opacity: .04; }
+
+.reserve-item:hover ~ .reserve-orb.gold {
+  opacity: .14;
+  transform: scale(1.4);
+}
+
+/* The live strip below stats */
+.reserve-live {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.reserve-live .rl-item {
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(0,0,0,.3);
+  border: 1px solid rgba(200,168,78,.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all .3s;
+}
+
+.reserve-live .rl-item:hover {
+  border-color: rgba(200,168,78,.3);
+  background: rgba(200,168,78,.05);
+}
+
+.rl-item .rl-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: rlPulse 2s infinite;
+}
+
+.rl-dot.green { background: #4ade80; }
+.rl-dot.gold { background: var(--gold2); }
+
+@keyframes rlPulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50%      { box-shadow: 0 0 0 8px transparent; opacity: .6; }
+}
+
+.rl-item strong { color: var(--gold2); font-size: 15px; font-family: "Playfair Display", serif; }
+
+@media (max-width: 768px) {
+  .reserve-grid { grid-template-columns: 1fr; }
+  .reserve-item { text-align: center !important; padding: 32px 20px !important; border-right: none !important; }
+  .reserve-item:nth-child(odd) .r-sub { margin: 0 auto; }
+  .reserve-item { border-bottom: 1px solid rgba(200,168,78,.06); }
+  .reserve-item:last-child { border-bottom: none; }
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
@@ -649,15 +804,52 @@ footer .disc {
     <div class="marquee-track" id="marquee"></div>
   </div>
 
-  <div class="stats-banner">
-    <div class="stat-pill"><div class="sp-num">250+</div><div class="sp-lbl">Aktive Trader</div></div>
-    <div class="stat-pill"><div class="sp-num">94%</div><div class="sp-lbl">Win-Rate (30T)</div></div>
-    <div class="stat-pill"><div class="sp-num">24/7</div><div class="sp-lbl">Support</div></div>
-    <div class="stat-pill"><div class="sp-num">#1</div><div class="sp-lbl">Community</div></div>
+  <!-- THE RESERVE -->
+<div class="reserve">
+  <div class="reserve-bg">
+    <div class="reserve-bg-line"></div>
+    <div class="reserve-bg-line"></div>
+    <div class="reserve-bg-line"></div>
   </div>
 
-  <div class="fomo-strip">
-    <div class="fomo-item">&#x1F525; Nur noch <strong id="fomoNum">23</strong> Pl&auml;tze frei</div>
+  <div class="section-eyebrow" style="text-align:center">Die Zahlen</div>
+
+  <div class="reserve-grid">
+    <div class="reserve-item">
+      <div class="r-num">250+</div>
+      <div class="r-ctx">Aktive Trader</div>
+      <div class="r-sub">Elite-Mitglieder. T&auml;glich aktiv. Echte Community.</div>
+    </div>
+    <div class="reserve-item">
+      <div class="r-num">94%</div>
+      <div class="r-ctx">Win-Rate</div>
+      <div class="r-sub">30-Tage-Durchschnitt. Charttechnisch fundierte Setups.</div>
+    </div>
+    <div class="reserve-item">
+      <div class="r-num">24/7</div>
+      <div class="r-ctx">Support</div>
+      <div class="r-sub">Rund um die Uhr erreichbar. Telegram-first Community.</div>
+    </div>
+    <div class="reserve-item">
+      <div class="r-num">#1</div>
+      <div class="r-ctx">Community</div>
+      <div class="r-sub">H&ouml;chste Engagement-Rate. Keine toten Gruppen.</div>
+    </div>
+    <div class="reserve-orb gold"></div>
+    <div class="reserve-orb amber"></div>
+  </div>
+
+  <div class="reserve-live">
+    <div class="rl-item">
+      <span class="rl-dot green"></span>
+      <span id="onlineNum2">247</span> Trader online
+    </div>
+    <div class="rl-item">
+      <span class="rl-dot gold"></span>
+      Nur noch <strong id="fomoNum2">23</strong> Pl&auml;tze
+    </div>
+  </div>
+</div>
     <div class="fomo-item">&#x2B50; <strong>4.9/5</strong> Community-Rating</div>
     <div class="fomo-item">&#x1F680; <strong id="onlineNum">247</strong> Trader online</div>
   </div>
@@ -761,11 +953,15 @@ footer .disc {
 
   // === COUNTERS ===
   setInterval(function(){
-    document.getElementById("fomoNum").textContent = Math.floor(Math.random() * 14) + 16;
-  }, 18000);
+  var n = Math.floor(Math.random() * 14) + 16;
+  document.getElementById("fomoNum").textContent = n;
+  if(document.getElementById("fomoNum2")) document.getElementById("fomoNum2").textContent = n;
+}, 18000), 18000);
   setInterval(function(){
-    document.getElementById("onlineNum").textContent = Math.floor(Math.random() * 50) + 210;
-  }, 25000);
+  var n = Math.floor(Math.random() * 50) + 210;
+  document.getElementById("onlineNum").textContent = n;
+  if(document.getElementById("onlineNum2")) document.getElementById("onlineNum2").textContent = n;
+}, 25000), 25000);
 
   // === NOTIFICATIONS ===
   var names = ["Max","Leon","Luca","David","Felix","Jonas","Tim","Niklas","Tom","Paul","Finn","Ben","Elias","Noah","Luis","Jan","Sven"];
