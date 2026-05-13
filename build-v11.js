@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldBank &mdash; Trading mit Haltung</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
+// GoldBank v11.0 — "SWISS VAULT"
+// Seriös, edel, minimalistisch. Keine Gimmicks. Reines Understatement.
+const fs = require('fs');
+const o = 'C:/Users/Hacer/.openclaw/workspace/amofx-landing/index.html';
 
+const a='&auml;',o2='&ouml;',u='&uuml;',s='&szlig;',e='&euro;';
+
+const CSS = `
 :root {
   --gold: #B8973E;
   --gold-light: #D4AF37;
@@ -356,7 +355,7 @@ section {
   color: var(--gold);
   font-weight: 300;
 }
-.faq-list details[open] summary::after { content: "–"; }
+.faq-list details[open] summary::after { content: "\u2013"; }
 .faq-list details p {
   padding: 0 0 22px;
   font-size: 14px;
@@ -397,11 +396,9 @@ footer .legal {
   .hero-content { animation: none; }
   .result-grid .r-item:hover img { transform: none; }
 }
+`;
 
-</style>
-</head>
-<body>
-
+const BODY = `
 <nav>
   <div class="brand">GOLD<span>BANK</span></div>
   <ul class="links">
@@ -445,14 +442,14 @@ footer .legal {
 <section id="features">
   <div class="section-head">
     <div class="eyebrow">Unsere Philosophie</div>
-    <h2>Drei Grunds&auml;tze</h2>
+    <h2>Drei Grunds${a}tze</h2>
   </div>
 
   <div class="feature-row">
     <div class="f-cell label-cell">
-      <div class="f-num">01 &mdash; Pr&auml;zision</div>
+      <div class="f-num">01 &mdash; Pr${a}zision</div>
       <h3>Kein <em>Raten.</em></h3>
-      <p>Jeder Einstieg, jeder Ausstieg ist begr&uuml;ndet. Charttechnik, Struktur, saubere Linien &mdash; keine verschwommenen Analysen.</p>
+      <p>Jeder Einstieg, jeder Ausstieg ist begr${u}ndet. Charttechnik, Struktur, saubere Linien &mdash; keine verschwommenen Analysen.</p>
     </div>
     <div class="f-cell text-cell"></div>
   </div>
@@ -462,14 +459,14 @@ footer .legal {
     <div class="f-cell label-cell" style="border-right:none;border-left:1px solid var(--border);align-items:flex-start;text-align:left">
       <div class="f-num">02 &mdash; Bildung</div>
       <h3>Verstehen, nicht <em>kopieren.</em></h3>
-      <p>Ein Signal ist nur so gut wie das Verst&auml;ndnis dahinter. Wir erkl&auml;ren das Warum. Du entwickelst dein eigenes Gesp&uuml;r f&uuml;r die M&auml;rkte.</p>
+      <p>Ein Signal ist nur so gut wie das Verst${a}ndnis dahinter. Wir erkl${a}ren das Warum. Du entwickelst dein eigenes Gesp${u}r f${u}r die M${a}rkte.</p>
     </div>
   </div>
 
   <div class="feature-row">
     <div class="f-cell label-cell">
       <div class="f-num">03 &mdash; Gemeinschaft</div>
-      <h3>Auf <em>AugenhC:/Users/Hacer/.openclaw/workspace/amofx-landing/index.htmlhe.</em></h3>
+      <h3>Auf <em>Augenh${o}he.</em></h3>
       <p>250 Trader, eine Mission. Exchange auf einem Niveau, das dich weiterbringt. Kein Guru-Gehabe. Nur gegenseitiges Wachstum.</p>
     </div>
     <div class="f-cell text-cell"></div>
@@ -492,7 +489,7 @@ footer .legal {
 
 <div class="cta-block">
   <div class="eyebrow">Mitgliedschaft</div>
-  <h2>Ihre Entscheidung f&uuml;r <em>Qualit&auml;t.</em></h2>
+  <h2>Ihre Entscheidung f${u}r <em>Qualit${a}t.</em></h2>
   <a href="https://t.me/GoldbankManager" target="_blank" class="btn-primary">&#x2022; Jetzt beitreten</a>
   <div class="cta-note">Kostenfrei. Keine Verpflichtungen. Dauerhaft.</div>
 </div>
@@ -506,16 +503,22 @@ footer .legal {
     <details><summary>Ist der Zugang kostenpflichtig?</summary><p>Nein. Die Mitgliedschaft ist kostenfrei und bleibt es. Es gibt keine Premium-Stufen, keine Abos, keine versteckten Kosten.</p></details>
     <details><summary>Wen sprechen wir an?</summary><p>Trader jeder Erfahrungsstufe, die ernsthaft an ihrer Entwicklung arbeiten wollen. Wir setzen auf Substanz, nicht auf Sensation.</p></details>
     <details><summary>Wie erfolgt der Beitritt?</summary><p>Per Klick auf „Mitglied werden" gelangen Sie direkt in unsere Telegram-Gruppe. Kein Antrag, keine Wartezeit.</p></details>
-    <details><summary>Was unterscheidet uns?</summary><p>Wir verkaufen keine Tr&auml;ume. Wir bieten Werkzeuge, Wissen und eine Gemeinschaft, die auf gegenseitigem Respekt basiert.</p></details>
+    <details><summary>Was unterscheidet uns?</summary><p>Wir verkaufen keine Tr${a}ume. Wir bieten Werkzeuge, Wissen und eine Gemeinschaft, die auf gegenseitigem Respekt basiert.</p></details>
   </div>
 </section>
 
 <footer>
   <div class="flogo">GOLD<em>BANK</em></div>
   <a href="https://t.me/GoldbankManager" target="_blank">t.me/GoldbankManager</a>
-  <p class="legal">Handel mit Finanzinstrumenten birgt erhebliche Risiken und kann zum vollst&auml;ndigen Verlust des eingesetzten Kapitals f&uuml;hren. Die Inhalte dieser Seite stellen keine Anlageberatung dar. Vergangene Ergebnisse sind keine Garantie f&uuml;r zuk&uuml;nftige Entwicklungen.</p>
+  <p class="legal">Handel mit Finanzinstrumenten birgt erhebliche Risiken und kann zum vollst${a}ndigen Verlust des eingesetzten Kapitals f${u}hren. Die Inhalte dieser Seite stellen keine Anlageberatung dar. Vergangene Ergebnisse sind keine Garantie f${u}r zuk${u}nftige Entwicklungen.</p>
   <p style="color:var(--text-faint);font-size:10px;margin-top:8px">&copy; 2026 GoldBank Trading</p>
 </footer>
+`;
 
-</body>
-</html>
+const HTML = '<!DOCTYPE html>\n<html lang="de">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>GoldBank &mdash; Trading mit Haltung</title>\n<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">\n<style>\n' + CSS + '\n</style>\n</head>\n<body>\n' + BODY + '\n</body>\n</html>';
+
+fs.writeFileSync(o, HTML, 'utf8');
+const sz = fs.statSync(o).size;
+console.log('v11.0 written: ' + sz + ' bytes');
+const ck = fs.readFileSync(o, 'utf8');
+['auml;','ouml;','uuml;','szlig;','Cormorant','Haltung','Grunds','Kennzahlen','Mitglied','Resultate','Philosophie'].forEach(w => console.log(ck.includes(w) ? 'OK: '+w : 'XX: '+w));
