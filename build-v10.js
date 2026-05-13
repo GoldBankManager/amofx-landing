@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldBank &mdash; Dein Move</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
+// GoldBank v10.0 — "GOLD RUSH"
+// Komplett neu: Liquid Gold Theme, narrative Struktur, frische Texte
+// Zero No-Go, 100% Skill-konform
 
+const fs = require('fs');
+const out = 'C:/Users/Hacer/.openclaw/workspace/amofx-landing/index.html';
+const a='&auml;',o='&ouml;',u='&uuml;',s='&szlig;',e='&euro;';
+
+const CSS = `
 :root{--g:#C8A84E;--gb:#E8C95D;--gd:#A8882E;--bg:#060403;--b2:#030201;--m:rgba(245,236,215,.42);--d:rgba(245,236,215,.15)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto;overflow-x:hidden;background:var(--bg)}
@@ -107,7 +107,7 @@ main{position:relative;z-index:1}
 .faq details:hover{border-color:rgba(200,168,78,.15)}
 .faq details summary{padding:18px 24px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:15px}
 .faq details summary::after{content:"+";font-size:18px;color:var(--gb);transition:transform .3s}
-.faq details[open] summary::after{content:"−"}
+.faq details[open] summary::after{content:"\u2212"}
 .faq details p{padding:0 24px 18px;color:var(--m);font-size:14px;line-height:1.7}
 
 /* === FOOTER === */
@@ -135,11 +135,9 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
   .btn,.btn-line{width:100%;justify-content:center}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important}}
+`;
 
-</style>
-</head>
-<body>
-
+const BODY = `
 <div id="dust"></div>
 <div class="orbs"><div class="orb a"></div><div class="orb b"></div></div>
 <div class="nf-stack" id="nf"></div>
@@ -163,7 +161,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
   </section>
 
   <div class="live-strip">
-    <span>&#x1F525; Nur noch <b id="fomo">23</b> Pl&auml;tze</span>
+    <span>&#x1F525; Nur noch <b id="fomo">23</b> Pl${a}tze</span>
     <span>&#x1F4C8; <b id="online">247</b> Trader online</span>
     <span>&#x2B50; <b>4.9/5</b> Community-Rating</span>
   </div>
@@ -171,7 +169,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
   <div class="tape"><div class="tape-track" id="tape-track"></div></div>
 
   <div class="big-stats reveal">
-    <div class="big-stat"><div class="bs-num">250+</div><div class="bs-lbl">Elite-Trader</div><div class="bs-sub">Keine Bots. Keine Geister. Echte K&ouml;pfe mit echten Trades.</div></div>
+    <div class="big-stat"><div class="bs-num">250+</div><div class="bs-lbl">Elite-Trader</div><div class="bs-sub">Keine Bots. Keine Geister. Echte K${o}pfe mit echten Trades.</div></div>
     <div class="big-stat"><div class="bs-num">94%</div><div class="bs-lbl">Trefferquote</div><div class="bs-sub">30-Tage-Schnitt. Jedes Setup charttechnisch abgesichert.</div></div>
   </div>
 
@@ -181,7 +179,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
       <div class="nar-text">
         <div class="nar-num">01</div>
         <h3>Kein <em>Raten.</em></h3>
-        <p>Jedes Signal kommt mit Entry, Stop-Loss und Take-Profit. Klare Linien, keine verschwommenen Analysen. Du wei&szlig;t genau, was Sache ist &mdash; bevor du den Trade setzt.</p>
+        <p>Jedes Signal kommt mit Entry, Stop-Loss und Take-Profit. Klare Linien, keine verschwommenen Analysen. Du wei${s}t genau, was Sache ist &mdash; bevor du den Trade setzt.</p>
       </div>
     </div>
     <div class="nar-block reverse">
@@ -189,7 +187,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
       <div class="nar-text">
         <div class="nar-num">02</div>
         <h3>Verstehen, nicht <em>Kopieren.</em></h3>
-        <p>Blind Signale nachlaufen macht dich abh&auml;ngig. Wir zeigen dir WARUM der Trade steht. Chartanalyse in Echtzeit. Du entwickelst dein eigenes Gesp&uuml;r.</p>
+        <p>Blind Signale nachlaufen macht dich abh${a}ngig. Wir zeigen dir WARUM der Trade steht. Chartanalyse in Echtzeit. Du entwickelst dein eigenes Gesp${u}r.</p>
       </div>
     </div>
     <div class="nar-block">
@@ -197,7 +195,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
       <div class="nar-text">
         <div class="nar-num">03</div>
         <h3>Deine <em>Crew.</em></h3>
-        <p>Trading ist einsam? Nicht hier. 250 Leute, die denselben Weg gehen. Fragen stellen, Wins feiern, Losses analysieren. Zusammen wachsen statt allein k&auml;mpfen.</p>
+        <p>Trading ist einsam? Nicht hier. 250 Leute, die denselben Weg gehen. Fragen stellen, Wins feiern, Losses analysieren. Zusammen wachsen statt allein k${a}mpfen.</p>
       </div>
     </div>
   </div>
@@ -205,7 +203,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
   <div class="showcase reveal" id="results">
     <div class="sc-top">
       <div class="sc-tag">Performance</div>
-      <h2>Fakten, keine <em>M&auml;rchen.</em></h2>
+      <h2>Fakten, keine <em>M${a}rchen.</em></h2>
     </div>
     <div class="rail" id="rail">
       <div class="rail-card"><img src="results/1.jpg" alt="Result" loading="lazy"></div>
@@ -218,14 +216,14 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
 
   <div class="cta-foot reveal">
     <div class="cf-tag">Los geht's</div>
-    <h2>Die T&uuml;r steht <em>offen.</em></h2>
+    <h2>Die T${u}r steht <em>offen.</em></h2>
     <a href="https://t.me/GoldbankManager" target="_blank" class="btn">&#x2713; Kostenlos starten</a>
     <div class="cf-sub">Kein Abo. Keine Falle. Einfach nur Trading.</div>
   </div>
 
   <div class="faq reveal">
     <details><summary>Kostet das wirklich nichts?</summary><p>Ja. Null. Kein Premium-Tier, kein versteckter Haken. Die Community lebt von Engagement, nicht von Abos.</p></details>
-    <details><summary>Ich bin Anf&auml;nger &mdash; komme ich mit?</summary><p>Absolut. Jedes Signal ist erkl&auml;rt. Jede Frage wird beantwortet. Die Community tr&auml;gt dich, bis du selbst l&auml;ufst.</p></details>
+    <details><summary>Ich bin Anf${a}nger &mdash; komme ich mit?</summary><p>Absolut. Jedes Signal ist erkl${a}rt. Jede Frage wird beantwortet. Die Community tr${a}gt dich, bis du selbst l${a}ufst.</p></details>
     <details><summary>Wie funktioniert der Einstieg?</summary><p>Klick auf &bdquo;Beitreten&rdquo;. Du landest direkt auf Telegram. Kein Formular, kein Warten, kein Gatekeeping.</p></details>
     <details><summary>Was unterscheidet GoldBank von anderen?</summary><p>Transparenz. Bildung. Brotherhood. Wir verkaufen dir keinen Traum &mdash; wir geben dir Werkzeuge.</p></details>
   </div>
@@ -234,19 +232,19 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
     <div class="fl">GOLD<em>BANK</em></div>
     <a href="https://t.me/GoldbankManager" target="_blank">t.me/GoldbankManager</a>
     <p style="color:rgba(255,255,255,.1);font-size:10px;margin-top:4px">&copy; 2026 GoldBank Trading.</p>
-    <p class="disc">Trading birgt erhebliche Verlustrisiken. Keine Anlageberatung. Vergangene Ergebnisse garantieren keine zuk&uuml;nftigen Gewinne.</p>
+    <p class="disc">Trading birgt erhebliche Verlustrisiken. Keine Anlageberatung. Vergangene Ergebnisse garantieren keine zuk${u}nftigen Gewinne.</p>
   </footer>
 </main>
+`;
 
-<script>
-
+const JS = `
 (function(){
   // Golden Dust
   var d=document.getElementById("dust"),h="";for(var i=0;i<65;i++)h+="<span style='left:"+Math.random()*100+"%;animation-duration:"+(10+Math.random()*24)+"s;animation-delay:"+Math.random()*18+"s'></span>";d.innerHTML=h;
 
   // Ticker
-  var w=["XAUUSD +2.130\u20ac","EURUSD +890\u20ac","NASDAQ +3.450\u20ac","BTC/USD +1.560\u20ac","GBPJPY +780\u20ac","DAX +2.500\u20ac","US30 +1.200\u20ac"],t="";
-  for(var i=0;i<28;i++)t+='<span class="tape-item">\u{1F3C6} <b>'+w[i%w.length]+'</b></span>';
+  var w=["XAUUSD +2.130\\u20ac","EURUSD +890\\u20ac","NASDAQ +3.450\\u20ac","BTC/USD +1.560\\u20ac","GBPJPY +780\\u20ac","DAX +2.500\\u20ac","US30 +1.200\\u20ac"],t="";
+  for(var i=0;i<28;i++)t+='<span class="tape-item">\\u{1F3C6} <b>'+w[i%w.length]+'</b></span>';
   document.getElementById("tape-track").innerHTML=t+t;
 
   // Counters
@@ -255,7 +253,7 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
 
   // Notifications
   var n=["Max","Leon","Luca","David","Felix","Jonas","Tim","Niklas","Tom","Paul","Finn","Ben","Elias","Noah"];
-  (function l(){var v=n[Math.floor(Math.random()*n.length)],e=document.createElement("div");e.className="nf";e.innerHTML='<span style="color:#4ade80;font-weight:700">\u2713</span> <b>'+v+'</b> ist beigetreten';document.getElementById("nf").appendChild(e);setTimeout(function(){e.remove()},3400);setTimeout(l,5500+Math.random()*6000)})();
+  (function l(){var v=n[Math.floor(Math.random()*n.length)],e=document.createElement("div");e.className="nf";e.innerHTML='<span style="color:#4ade80;font-weight:700">\\u2713</span> <b>'+v+'</b> ist beigetreten';document.getElementById("nf").appendChild(e);setTimeout(function(){e.remove()},3400);setTimeout(l,5500+Math.random()*6000)})();
 
   // Scroll Reveals
   var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");obs.unobserve(e.target)}})},{threshold:.15});
@@ -264,7 +262,13 @@ footer .disc{font-size:11px;color:rgba(255,255,255,.1);max-width:440px;margin:12
   // Grab Scroll
   var r=document.getElementById("rail"),down=!1,sx,sl;r.addEventListener("mousedown",function(e){down=!0;r.style.cursor="grabbing";sx=e.pageX-r.offsetLeft;sl=r.scrollLeft});r.addEventListener("mouseleave",function(){down=!1;r.style.cursor="grab"});r.addEventListener("mouseup",function(){down=!1;r.style.cursor="grab"});r.addEventListener("mousemove",function(e){if(!down)return;e.preventDefault();r.scrollLeft=sl-(e.pageX-r.offsetLeft-sx)*1.5});
 })();
+`;
 
-</script>
-</body>
-</html>
+const HTML = '<!DOCTYPE html>\n<html lang="de">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>GoldBank &mdash; Dein Move</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">\n<style>\n' + CSS + '\n</style>\n</head>\n<body>\n' + BODY + '\n<script>\n' + JS + '\n</script>\n</body>\n</html>';
+
+fs.writeFileSync(out, HTML, 'utf8');
+const sz = fs.statSync(out).size;
+console.log('v10.0 written: ' + sz + ' bytes');
+
+const ck = fs.readFileSync(out, 'utf8');
+['auml;','ouml;','uuml;','szlig;','euro;','250+','94%','Move','Crew','Fakten'].forEach(function(w){ console.log(ck.includes(w) ? 'OK: '+w : 'XX: '+w); });
