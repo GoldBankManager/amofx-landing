@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldBank &mdash; Trading mit Verstand</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
+// GoldBank v12.0 — "THE CROWN"
+// Geisteskrank + seriös. Beeindruckend ohne billig zu wirken.
+// Null No-Go Patterns. Reine Premium-Execution.
+const fs = require('fs');
+const o = 'C:/Users/Hacer/.openclaw/workspace/amofx-landing/index.html';
+const a='&auml;',ou='&ouml;',uu='&uuml;',sz='&szlig;',eu='&euro;';
 
+const CSS = `
 :root {
   --g: #C8A84E;
   --gb: #E8C95D;
@@ -124,7 +123,7 @@ nav .nav-r .entry:hover { background:var(--gd);color:var(--bg);border-color:var(
 .knowledge .k-item .k-q { font-size:16px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--t) }
 .knowledge .k-item .k-q::after { content:"+";font-size:20px;color:var(--gb);font-weight:300;transition:transform .3s }
 .knowledge .k-item .k-a { display:none;padding-top:14px;font-size:14px;color:var(--m);line-height:1.8 }
-.knowledge .k-item.open .k-q::after { content:"–" }
+.knowledge .k-item.open .k-q::after { content:"\u2013" }
 .knowledge .k-item.open .k-a { display:block }
 
 /* === FOOTER === */
@@ -136,11 +135,9 @@ footer a:hover { color:var(--gb) }
 footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin:16px auto 0;line-height:1.8 }
 
 @media(prefers-reduced-motion:reduce){ *,*::before,*::after { animation-duration:.01ms!important;animation-iteration-count:1!important } }
+`;
 
-</style>
-</head>
-<body>
-
+const BODY = `
 <div id="depth"><div class="layer l1"></div><div class="layer l2"></div></div>
 <div id="prestige"></div>
 
@@ -159,11 +156,11 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
   <div class="hero">
     <div class="hero-body">
       <div class="overline">GoldBank Trading</div>
-      <h1>Was w&auml;re,<br>wenn du jeden Trade<br><span class="accent">verstehst?</span></h1>
+      <h1>Was w${a}re,<br>wenn du jeden Trade<br><span class="accent">verstehst?</span></h1>
       <p class="statement">
         Eine private Gemeinschaft von <strong>250 Elite-Tradern</strong>.
-        Keine Gl&uuml;cksspiel-Mentalit&auml;t. Keine falschen Versprechen.
-        Nur pr&auml;zise Analyse und eine Crew, die dein Wachstum ernst nimmt.
+        Keine Gl${uu}cksspiel-Mentalit${a}t. Keine falschen Versprechen.
+        Nur pr${a}zise Analyse und eine Crew, die dein Wachstum ernst nimmt.
       </p>
       <div class="hero-cta">
         <a href="https://t.me/GoldbankManager" target="_blank" class="btn-crown">&#x25C6; Jetzt Zugang erhalten</a>
@@ -184,7 +181,7 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
       <div class="man-vis"><div class="man-aura" style="background:var(--gb)"></div><div class="man-glyph">&#x25C9;</div></div>
       <div class="man-txt">
         <div class="man-idx">Prinzip 01</div>
-        <h3><i>Pr&auml;zision</i> vor Quantit&auml;t</h3>
+        <h3><i>Pr${a}zision</i> vor Quantit${a}t</h3>
         <p>Wir posten nicht jeden Trade. Nur Setups, die charttechnisch einwandfrei sind. Entry, SL, TP &mdash; transparent dokumentiert. Kein Ratespiel.</p>
       </div>
     </div>
@@ -193,7 +190,7 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
       <div class="man-txt">
         <div class="man-idx">Prinzip 02</div>
         <h3>Verstehen statt <i>blind folgen</i></h3>
-        <p>Ein kopiertes Signal ist wertlos ohne Kontext. Wir zeigen dir, warum der Trade steht. Chartstruktur, Timing, Marktmechanik. Das macht dich unabh&auml;ngig.</p>
+        <p>Ein kopiertes Signal ist wertlos ohne Kontext. Wir zeigen dir, warum der Trade steht. Chartstruktur, Timing, Marktmechanik. Das macht dich unabh${a}ngig.</p>
       </div>
     </div>
     <div class="man-row">
@@ -209,7 +206,7 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
   <div class="gallery-sec" id="gallery">
     <div class="gallery-head">
       <div class="gh-tag">Resultate</div>
-      <h2>Transparent. <i>Nachpr&uuml;fbar.</i></h2>
+      <h2>Transparent. <i>Nachpr${uu}fbar.</i></h2>
     </div>
     <div class="gallery-grid">
       <div class="g-img"><img src="results/1.jpg" alt="Trading Result" loading="lazy"></div>
@@ -232,8 +229,8 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
       <div class="kh-tag">Wissen</div>
       <h2>Was Sie <i>wissen sollten</i></h2>
     </div>
-    <div class="k-item"><div class="k-q" onclick="this.parentElement.classList.toggle('open')">Ist die Mitgliedschaft tats&auml;chlich kostenfrei?</div><div class="k-a">Ja. Es gibt keine Premium-Stufen, keine Abonnements, keine Testphasen mit automatischer Verl&auml;ngerung. Die Teilnahme ist und bleibt freiwillig und kostenfrei.</div></div>
-    <div class="k-item"><div class="k-q" onclick="this.parentElement.classList.toggle('open')">An wen richtet sich GoldBank?</div><div class="k-a">An Trader, die bereit sind, Verantwortung f&uuml;r ihre Ergebnisse zu &uuml;bernehmen. Vom ambitionierten Anf&auml;nger bis zum erfahrenen Marktteilnehmer &mdash; wer ernsthaft lernen will, findet hier seinen Platz.</div></div>
+    <div class="k-item"><div class="k-q" onclick="this.parentElement.classList.toggle('open')">Ist die Mitgliedschaft tats${a}chlich kostenfrei?</div><div class="k-a">Ja. Es gibt keine Premium-Stufen, keine Abonnements, keine Testphasen mit automatischer Verl${a}ngerung. Die Teilnahme ist und bleibt freiwillig und kostenfrei.</div></div>
+    <div class="k-item"><div class="k-q" onclick="this.parentElement.classList.toggle('open')">An wen richtet sich GoldBank?</div><div class="k-a">An Trader, die bereit sind, Verantwortung f${uu}r ihre Ergebnisse zu ${uu}bernehmen. Vom ambitionierten Anf${a}nger bis zum erfahrenen Marktteilnehmer &mdash; wer ernsthaft lernen will, findet hier seinen Platz.</div></div>
     <div class="k-item"><div class="k-q" onclick="this.parentElement.classList.toggle('open')">Wie trete ich der Gemeinschaft bei?</div><div class="k-a">Klicken Sie auf einen der Beitritts-Buttons. Sie werden direkt zu unserer privaten Telegram-Gruppe weitergeleitet. Keine Registrierung, kein Formular, kein Gatekeeping.</div></div>
     <div class="k-item"><div class="k-q" onclick="this.parentElement.classList.toggle('open')">Was unterscheidet GoldBank von anderen Gruppen?</div><div class="k-a">Drei Dinge: (1) Wir zeigen, wie und warum ein Trade funktioniert. (2) Wir betreiben kein Influencer-Marketing mit gefakten Ergebnissen und geleasten Luxusautos. (3) Unsere Gemeinschaft basiert auf gegenseitigem Respekt, nicht auf Guru-Verehrung.</div></div>
   </div>
@@ -241,13 +238,13 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
   <footer>
     <div class="ft">GOLD<i>BANK</i></div>
     <a href="https://t.me/GoldbankManager" target="_blank">t.me/GoldbankManager</a>
-    <p class="disc">Der Handel mit Finanzinstrumenten birgt erhebliche Risiken. Verluste kC:/Users/Hacer/.openclaw/workspace/amofx-landing/index.htmlnnen das eingesetzte Kapital &uuml;bersteigen. Die bereitgestellten Informationen stellen keine Anlageberatung dar. Fr&uuml;here Ergebnisse sind kein Indikator f&uuml;r zuk&uuml;nftige Wertentwicklungen.</p>
+    <p class="disc">Der Handel mit Finanzinstrumenten birgt erhebliche Risiken. Verluste k${o}nnen das eingesetzte Kapital ${uu}bersteigen. Die bereitgestellten Informationen stellen keine Anlageberatung dar. Fr${uu}here Ergebnisse sind kein Indikator f${uu}r zuk${uu}nftige Wertentwicklungen.</p>
     <p style="color:var(--d);font-size:10px;margin-top:8px">&copy; 2026 GoldBank Trading</p>
   </footer>
 </main>
+`;
 
-<script>
-
+const JS = `
 (function(){
   // Prestige dust
   var p=document.getElementById("prestige"),h="";for(var i=0;i<40;i++){var x=Math.random()*100,dur=14+Math.random()*28,del=Math.random()*20,sz=1+Math.random()*2;h+='<div class="grain" style="left:'+x+'%;width:'+sz+'px;height:'+sz+'px;animation-duration:'+dur+'s;animation-delay:'+del+'s"></div>'}p.innerHTML=h;
@@ -261,7 +258,10 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
   document.querySelectorAll(".man-row,.metric,.g-img").forEach(function(el){el.style.opacity="0";el.style.transform="translateY(30px)";el.style.filter="blur(2px)";el.style.transition="opacity .8s ease,transform .8s ease,filter .8s ease";obs.observe(el)});
   document.querySelector(".hero-body").style.opacity="1";
 })();
+`;
 
-</script>
-</body>
-</html>
+const HTML = '<!DOCTYPE html>\n<html lang="de">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>GoldBank &mdash; Trading mit Verstand</title>\n<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">\n<style>\n'+CSS+'\n</style>\n</head>\n<body>\n'+BODY+'\n<script>\n'+JS+'\n</script>\n</body>\n</html>';
+
+fs.writeFileSync(o,HTML,'utf8');const size=fs.statSync(o).size;console.log('v12.0: '+size+' bytes');
+const ck=fs.readFileSync(o,'utf8');
+['auml;','ouml;','uuml;','szlig;','euro;','Cormorant','Prestige','Prinzip','was wäre','jeden Trade','verstehst','Bruderhood','Einzelkampf'].forEach(w=>console.log(ck.includes(w)?'OK:'+w:'XX:'+w));
