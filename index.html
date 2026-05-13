@@ -80,11 +80,29 @@ nav .nav-r .entry:hover { background:var(--gd);color:var(--bg);border-color:var(
 .ev-sub { font-size:13px;color:var(--d);margin-top:6px;font-weight:400 }
 @media(max-width:768px){ .ev-inner { flex-direction:column;padding:48px 24px;gap:36px } .ev-item:not(:last-child)::after { display:none } .ev-item:not(:last-child) { border-bottom:1px solid var(--b);padding-bottom:36px;width:100% } }
 
-/* === MANIFEST BLOCKS === */
-.manifest { max-width:1000px;margin:0 auto;padding:120px 60px }
-.manifest .man-row { display:grid;grid-template-columns:1fr 1fr;align-items:center;min-height:360px;gap:0 }
-.man-row+.man-row { margin-top:1px }
-.man-row .man-vis { position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;height:100%;min-height:340px }
+/* === PRINCIPLES 3D === */
+.principles { max-width:1200px;margin:0 auto;padding:140px 40px;perspective:1200px }
+.pr-header { text-align:center;margin-bottom:80px }
+.pr-tag { font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--gb);font-weight:600;margin-bottom:16px;display:block }
+.pr-title { font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(36px,5vw,56px);font-weight:700;color:#fff;line-height:1.1 }
+.pr-title i { color:var(--gb);font-style:italic }
+.pr-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:30px;transform-style:preserve-3d }
+.pr-card { background:linear-gradient(145deg,rgba(16,13,10,.9),rgba(8,6,5,.95));border:1px solid var(--b);border-radius:24px;padding:48px 36px;position:relative;transform-style:preserve-3d;transition:all .5s cubic-bezier(.4,0,.2,1);transform:rotateY(-5deg) rotateX(2deg);overflow:hidden }
+.pr-card:nth-child(2) { transform:rotateY(0) rotateX(-2deg);margin-top:-20px }
+.pr-card:nth-child(3) { transform:rotateY(5deg) rotateX(2deg) }
+.pr-card::before { content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(200,168,78,.03),transparent 60%);pointer-events:none }
+.pr-card::after { content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(200,168,78,.1),transparent);transition:left .8s }
+.pr-card:hover { transform:rotateY(0) rotateX(0) translateZ(30px);border-color:rgba(200,168,78,.4);box-shadow:0 25px 50px rgba(0,0,0,.5),0 0 80px rgba(200,168,78,.1) }
+.pr-card:hover::after { left:100% }
+.pr-number { position:absolute;top:24px;right:28px;font-family:"Cormorant Garamond",serif;font-size:14px;color:var(--d);font-weight:600;letter-spacing:.1em }
+.pr-icon-wrap { width:70px;height:70px;border-radius:20px;background:linear-gradient(135deg,var(--gd),var(--g));display:flex;align-items:center;justify-content:center;margin-bottom:28px;position:relative;transform:translateZ(20px);box-shadow:0 10px 30px rgba(200,168,78,.2) }
+.pr-icon { font-size:28px;color:var(--bg) }
+.pr-card h3 { font-family:"Cormorant Garamond",serif;font-size:clamp(22px,2.5vw,28px);font-weight:700;color:#fff;line-height:1.2;margin-bottom:16px;transform:translateZ(15px) }
+.pr-card p { font-size:14px;color:var(--m);line-height:1.8;transform:translateZ(10px) }
+.pr-shine { position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity .4s;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,168,78,.15),transparent 50%);pointer-events:none }
+.pr-card:hover .pr-shine { opacity:1 }
+@media(max-width:900px){ .pr-grid { grid-template-columns:1fr } .pr-card { transform:none!important;margin-top:0!important } }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 .man-row .man-vis .man-aura { position:absolute;width:220px;height:220px;border-radius:50%;filter:blur(80px);opacity:.05;transition:all 1.2s }
 .man-row:hover .man-vis .man-aura { opacity:.16;transform:scale(1.6) }
 .man-row .man-vis .man-glyph { font-size:clamp(56px,8vw,80px);position:relative;z-index:2;transition:transform .6s }
@@ -202,29 +220,32 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
     </div>
   </div>
 
-  <div class="manifest" id="manifest">
-    <div class="man-row">
-      <div class="man-vis"><div class="man-aura" style="background:var(--gb)"></div><div class="man-glyph">&#x25C9;</div></div>
-      <div class="man-txt">
-        <div class="man-idx">Prinzip 01</div>
-        <h3><i>Pr&auml;zision</i> vor Quantit&auml;t</h3>
-        <p>Wir posten nicht jeden Trade. Nur Setups, die charttechnisch einwandfrei sind. Entry, SL, TP &mdash; transparent dokumentiert. Kein Ratespiel.</p>
-      </div>
+  <div class="principles" id="manifest">
+    <div class="pr-header">
+      <span class="pr-tag">Unsere Grundsätze</span>
+      <h2 class="pr-title">Was uns <i>unterscheidet</i></h2>
     </div>
-    <div class="man-row reverse">
-      <div class="man-vis"><div class="man-aura" style="background:var(--gd)"></div><div class="man-glyph">&#x25CE;</div></div>
-      <div class="man-txt">
-        <div class="man-idx">Prinzip 02</div>
-        <h3>Verstehen statt <i>blind folgen</i></h3>
-        <p>Ein kopiertes Signal ist wertlos ohne Kontext. Wir zeigen dir, warum der Trade steht. Chartstruktur, Timing, Marktmechanik. Das macht dich unabh&auml;ngig.</p>
+    <div class="pr-grid">
+      <div class="pr-card">
+        <div class="pr-shine"></div>
+        <span class="pr-number">01</span>
+        <div class="pr-icon-wrap"><span class="pr-icon">&#9672;</span></div>
+        <h3>Qualität schlägt Quantität</h3>
+        <p>Wir posten keine 20 Trades pro Tag. Wir posten nur Setups, bei denen wir selbst mit echtem Geld reingehen. Jeder Trade wird vorher analysiert, dokumentiert und nachher ausgewertet. Kein Zufall, nur Strategie.</p>
       </div>
-    </div>
-    <div class="man-row">
-      <div class="man-vis"><div class="man-aura" style="background:var(--gb)"></div><div class="man-glyph">&#x25CB;</div></div>
-      <div class="man-txt">
-        <div class="man-idx">Prinzip 03</div>
-        <h3><i>Brotherhood</i> statt Einzelkampf</h3>
-        <p>Trading kann einsam machen. Nicht in dieser Crew. 250 Leute auf demselben Pfad &mdash; Wins feiern, Losses analysieren, zusammen besser werden.</p>
+      <div class="pr-card">
+        <div class="pr-shine"></div>
+        <span class="pr-number">02</span>
+        <div class="pr-icon-wrap"><span class="pr-icon">&#9733;</span></div>
+        <h3>Lernen statt Kopieren</h3>
+        <p>Ein gekauftes Signal ist wertlos, wenn du nicht verstehst, warum es funktioniert. Wir erklären die Chartstruktur, das Timing, die Marktpsychologie. Ziel: Du wirst unabhängig, nicht abhängig.</p>
+      </div>
+      <div class="pr-card">
+        <div class="pr-shine"></div>
+        <span class="pr-number">03</span>
+        <div class="pr-icon-wrap"><span class="pr-icon">&#9829;</span></div>
+        <h3>Gemeinschaft über alles</h3>
+        <p>Trading ist ein einsames Spiel – wenn du alleine spielst. Hier bist du Teil einer Crew, die zusammen wächst. Wir feiern die Wins, analysieren die Losses und pushen uns gegenseitig. Keine Ego-Trips, nur Progress.</p>
       </div>
     </div>
   </div>
@@ -280,9 +301,20 @@ footer .disc { font-size:11px;color:rgba(255,255,255,.08);max-width:460px;margin
   function parl(){requestAnimationFrame(parl);var layers=document.querySelectorAll("#depth .layer");layers[0].style.transform="translate("+mx*.6+"px,"+my*.4+"px)";layers[1].style.transform="translate("+(-mx*.4)+"px,"+(-my*.5)+"px) scale(1.15)"}parl();
 
   // Scroll reveals
-  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)";e.target.style.filter="blur(0)";obs.unobserve(e.target)}})},{threshold:.18});
-  document.querySelectorAll(".man-row,.ev-item,.g-img").forEach(function(el){el.style.opacity="0";el.style.transform="translateY(30px)";el.style.filter="blur(2px)";el.style.transition="opacity .8s ease,transform .8s ease,filter .8s ease";obs.observe(el)});
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="";e.target.style.filter="blur(0)";obs.unobserve(e.target)}})},{threshold:.18});
+  document.querySelectorAll(".pr-card,.ev-item,.g-img").forEach(function(el){el.style.opacity="0";el.style.transform="translateY(30px)";el.style.filter="blur(2px)";el.style.transition="opacity .8s ease,transform .8s ease,filter .8s ease";obs.observe(el)});
   document.querySelector(".hero-body").style.opacity="1";
+  
+  // 3D Shine effect for principle cards
+  document.querySelectorAll('.pr-card').forEach(function(card){
+    card.addEventListener('mousemove',function(e){
+      var rect=this.getBoundingClientRect();
+      var x=((e.clientX-rect.left)/rect.width)*100;
+      var y=((e.clientY-rect.top)/rect.height)*100;
+      this.style.setProperty('--mx',x+'%');
+      this.style.setProperty('--my',y+'%');
+    });
+  });
 })();
 
 </script>
