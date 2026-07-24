@@ -1,15 +1,9 @@
-# Video- & Kanal-Analyse: youtu.be/3GIRCBqx1Gc
+# Video- & Kanal-Analyse: youtu.be/3GIRCBqx1Gc (@zanehoyer)
 
 **Analysiert am:** 2026-07-24
-**Methode:** Szene-für-Szene-KI-Videoanalyse (Higgsfield Video Analysis)
+**Methode:** Szene-für-Szene-KI-Videoanalyse (Higgsfield Video Analysis) + Web-Recherche zum Kanal
 **Format:** Vertikales Kurzvideo (Short), Länge ca. 29 Sekunden
-
-> **Hinweis zum Kanal:** Der direkte Zugriff auf YouTube ist aus dieser Umgebung
-> netzwerkseitig gesperrt, und das Video ist in keiner Suchmaschine indexiert
-> (typisch für kleine/neue Kanäle oder als "nicht gelistet" hochgeladene Videos).
-> Die Kanal-Ebene (Name, Upload-Frequenz, weitere Videos) konnte daher nicht
-> eingesehen werden. Die Analyse des Videos selbst ist vollständig — und daraus
-> lässt sich die komplette Machart ableiten und reproduzieren.
+**Kanal:** [Zane Hoyer — youtube.com/@zanehoyer](https://www.youtube.com/@zanehoyer), Kanal-ID `UC5g1kvyNO83VDWfb6sOVHeg`
 
 ---
 
@@ -27,9 +21,64 @@ eine **KI-generierte oder KI-gestützte UGC-Ad** hin (perfekt konsistente
 Protagonistin, Speed-Ramps, 60fps-Zeitlupe, idealtypisches Ringlicht-Setup) —
 also exakt der Workflow, der sich mit Tools wie Higgsfield selbst umsetzen lässt.
 
+Im Kontext des Kanals (siehe Abschnitt 2) ist das Video ein **Demo-/
+Portfolio-Stück**: Es zeigt die Art von Kundenvideo, die Zane Hoyer produziert
+und deren Produktion er lehrt.
+
 ---
 
-## 2. Szene-für-Szene-Breakdown
+## 2. Der Kanal: Zane Hoyer (@zanehoyer)
+
+**Wer:** Video-Editor mit ca. **45.000 YouTube-Abonnenten**, zusätzlich aktiv
+auf [TikTok](https://www.tiktok.com/@zanehoyer),
+[Instagram](https://www.instagram.com/zanehoyer/),
+[Threads](https://www.threads.com/@zanehoyer) und
+[X/Twitter](https://twitter.com/zanehoyer) — dieselben Kurzvideos werden
+plattformübergreifend wiederverwertet.
+
+**Nische:** Nicht "Skincare" und nicht "Editing-Tutorials für Hobbyisten",
+sondern **das Business des Video-Editierens**: hochpreisige Kunden gewinnen,
+Deals closen, ein Editing-Business skalieren.
+
+**Geschäftsmodell (der eigentliche Trick):** Der Kanal ist die Spitze eines
+Funnels auf [zanehoyer.com](https://zanehoyer.com/), wo er ein kostenpflichtiges
+Programm/Community verkauft. Bestandteile laut Website:
+
+- Wöchentliche **Masterminds**, in denen erfolgreiche Outreach-Videos seziert
+  und Strategien verfeinert werden
+- Ein **Framework für Videos, die Aufmerksamkeit erzwingen, Vertrauen aufbauen
+  und Kunden zum Ja bewegen** (exakt die Formel aus Abschnitt 4)
+- Training, Verkaufsgespräche so zu führen, dass der Editor als Notwendigkeit
+  statt als Kostenfaktor wahrgenommen wird
+- Persönliches Feedback + direkter Zugang zu ihm und einem Netzwerk von
+  Editoren mit zahlenden Kunden
+
+**Wie "er das macht" — die Kanal-Strategie in 4 Schritten:**
+
+1. **Beweis statt Behauptung:** Shorts wie die analysierte Hagebuttenöl-Ad
+   zeigen fertige, hochwertige Kundenvideos — das Video selbst ist das
+   Portfolio. Wer es sieht, denkt "so etwas will ich für mein Produkt"
+   oder "so etwas will ich produzieren können".
+2. **Education als Reichweiten-Motor:** Dazwischen Lern-Content
+   ("Let me know what you guys want to learn next" auf TikTok) — er fragt
+   die Community aktiv nach Themen und produziert dann genau das.
+3. **Ein Funnel, ein Ziel:** Jedes Video endet mit Link-in-Bio →
+   zanehoyer.com → Programm. Der CTA im analysierten Video ("link in my bio…
+   before the winter sale ends") ist dieselbe Mechanik, die er auch für sich
+   selbst nutzt.
+4. **Multi-Plattform-Verwertung:** Ein vertikales 30-s-Video wird auf YouTube
+   Shorts, TikTok, Reels und Threads gleichzeitig ausgespielt — vierfache
+   Reichweite pro produziertem Asset.
+
+> **Datenlage:** Upload-Frequenz, View-Zahlen und die vollständige Videoliste
+> waren aus dieser Umgebung nicht abrufbar (YouTube netzwerkseitig gesperrt);
+> Grundlage sind Suchmaschinen-Snapshots von Kanal, Website und
+> Social-Profilen. Kernaussagen (45k Abos, Positionierung, Programm-Inhalte)
+> sind mehrfach belegt.
+
+---
+
+## 3. Szene-für-Szene-Breakdown des Videos
 
 | # | Zeit | Funktion | Shot | Was passiert (Bild) | Was gesagt wird (Ton) |
 |---|------|----------|------|---------------------|----------------------|
@@ -42,9 +91,9 @@ also exakt der Workflow, der sich mit Tools wie Higgsfield selbst umsetzen läss
 
 ---
 
-## 3. Die Formel dahinter (das ist der Kern der Machart)
+## 4. Die Formel dahinter (das ist der Kern der Machart)
 
-### 3.1 Struktur: die 6-Beat-UGC-Formel in ~30 Sekunden
+### 4.1 Struktur: die 6-Beat-UGC-Formel in ~30 Sekunden
 
 1. **Hook (0–3 s):** Problem des Zuschauers direkt ansprechen + Scroll-Stopper
    ("stop scrolling"). Immer Gesicht + Produkt gleichzeitig im Bild.
@@ -60,7 +109,7 @@ also exakt der Workflow, der sich mit Tools wie Higgsfield selbst umsetzen läss
 6. **CTA (24–29 s):** Link-Hinweis + künstliche Verknappung ("before the
    winter sale ends") + lockerer Abgang (Zwinkern).
 
-### 3.2 Handwerkliche Muster
+### 4.2 Handwerkliche Muster
 
 - **Pacing:** 6 Szenen in 29 s = Szenenwechsel alle 3–6 Sekunden. Keine Szene
   länger als 6 s → kein Absprungpunkt.
@@ -83,12 +132,12 @@ also exakt der Workflow, der sich mit Tools wie Higgsfield selbst umsetzen läss
 
 ---
 
-## 4. So setze ich es selbst um (reproduzierbares Playbook)
+## 5. So setze ich es selbst um (reproduzierbares Playbook)
 
 Der komplette Workflow ist mit den angebundenen Higgsfield-Tools abbildbar:
 
 ### Schritt 1 — Skript (Text zuerst, nie Bild zuerst)
-6 Beats nach der Formel aus 3.1 schreiben. Pro Beat max. 1–2 Sätze
+6 Beats nach der Formel aus 4.1 schreiben. Pro Beat max. 1–2 Sätze
 gesprochener Text, Ziellänge 25–35 s.
 
 ### Schritt 2 — Charakter-Konsistenz
@@ -119,9 +168,14 @@ Clips in Beat-Reihenfolge schneiden (harte Cuts, keine Übergänge), Untertitel
 einbrennen (Shorts laufen oft stumm), dann `virality_predictor` zur
 Hook-/Retention-Prüfung laufen lassen und den Hook ggf. iterieren.
 
+### Schritt 6 — Distribution nach Kanal-Vorbild
+Wie Zane Hoyer: dasselbe vertikale Video auf YouTube Shorts, TikTok, Reels
+und Threads ausspielen, CTA immer auf denselben Link-in-Bio-Funnel
+(bei uns: die AMOFX-Landingpage).
+
 ---
 
-## 5. Übertragung auf AMOFX (gleiche Formel, unser Produkt)
+## 6. Übertragung auf AMOFX (gleiche Formel, unser Produkt)
 
 Beispiel-Skript nach identischem 6-Beat-Muster für die AMOFX-Landingpage:
 
@@ -140,12 +194,19 @@ Beispiel-Skript nach identischem 6-Beat-Muster für die AMOFX-Landingpage:
 
 ---
 
-## 6. Offene Punkte
+## 7. Quellen & offene Punkte
 
-- **Kanal-Analyse:** Sobald der Kanalname oder die Kanal-URL vorliegt, können
-  Upload-Frequenz, Thumbnail-Muster, Titel-Formeln und die Nischen-Strategie
-  ergänzt werden. Aus dieser Umgebung war der Kanal nicht abrufbar (YouTube
-  netzwerkseitig gesperrt, Video nirgends indexiert).
+**Quellen der Kanal-Recherche:**
+[YouTube-Kanal](https://www.youtube.com/@zanehoyer) ·
+[zanehoyer.com](https://zanehoyer.com/) ·
+[TikTok](https://www.tiktok.com/@zanehoyer) ·
+[Instagram](https://www.instagram.com/zanehoyer/) ·
+[LinkedIn](https://www.linkedin.com/in/zane-hoyer-b74311231/) ·
+[ytjobs.co-Profil](https://ytjobs.co/channel/77425)
+
+**Offene Punkte:**
+- View-Zahlen, Upload-Frequenz und Thumbnail-/Titel-Muster der letzten Videos
+  konnten aus dieser Umgebung nicht erhoben werden (YouTube gesperrt).
 - **Nächster Schritt auf Wunsch:** Testproduktion eines 30-s-AMOFX-Spots nach
-  dem Playbook in Abschnitt 4/5 (verbraucht Higgsfield-Credits, daher nur auf
+  dem Playbook in Abschnitt 5/6 (verbraucht Higgsfield-Credits, daher nur auf
   ausdrückliche Freigabe).
